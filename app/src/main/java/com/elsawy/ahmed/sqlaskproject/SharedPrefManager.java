@@ -16,6 +16,8 @@ public class SharedPrefManager {
     private static final String KEY_USERNAME = "username";
     private static final String KEY_USER_EMAIL = "useremail";
     private static final String KEY_USER_ID = "userid";
+    private static final String KEY_USER_GENDER = "usergender";
+    private static final String KEY_USER_BIRTHDAY = "userbirthday";
 
 
     private SharedPrefManager(Context context) {
@@ -30,7 +32,7 @@ public class SharedPrefManager {
         return mInstance;
     }
 
-    public boolean userLogin(int id, String username, String email){
+    public boolean userLogin(int id, String username, String email,String gender,String birthday){
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -38,6 +40,8 @@ public class SharedPrefManager {
         editor.putInt(KEY_USER_ID, id);
         editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USERNAME, username);
+        editor.putString(KEY_USER_GENDER, gender);
+        editor.putString(KEY_USER_BIRTHDAY, birthday);
 
         editor.apply();
 
@@ -70,4 +74,13 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USER_EMAIL, null);
     }
+    public String getUserGender(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_USER_GENDER, null);
+    }
+    public String getUserBirthday(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(KEY_USER_BIRTHDAY, null);
+    }
+
 }

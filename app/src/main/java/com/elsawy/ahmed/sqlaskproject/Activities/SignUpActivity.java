@@ -58,6 +58,12 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        if (SharedPrefManager.getInstance(this).isLoggedIn())
+        {
+            openLoginActivity();
+            Log.d(TAG, "You are already have account");
+        }
+
         emailField = findViewById(R.id.email_sign_up);
         passwordField = findViewById(R.id.password_sign_up);
         firstNameField = findViewById(R.id.first_name_sign_up);
@@ -72,17 +78,6 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        if (SharedPrefManager.getInstance(this).isLoggedIn())
-        {
-            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            Log.d(TAG, "You are already have account");
-        }
-    }
 
     private void createAccount() {
 
@@ -114,6 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
                         JSONObject jsonObject = new JSONObject(response);
 
                         Toast.makeText(getApplicationContext(), jsonObject.getString("message"), Toast.LENGTH_LONG).show();
+                        openLoginActivity();
 
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -257,5 +253,10 @@ public class SignUpActivity extends AppCompatActivity {
         }
     };
 
+    private void openLoginActivity(){
+        Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
 
 }

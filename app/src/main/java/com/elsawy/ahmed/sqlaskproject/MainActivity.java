@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.elsawy.ahmed.sqlaskproject.Activities.LoginActivity;
 import com.elsawy.ahmed.sqlaskproject.Activities.SignUpActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +18,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         TextView textView = (TextView)findViewById(R.id.main_activity_textview);
-        textView.setOnClickListener(even ->{startActivity(new Intent(this, SignUpActivity.class));});
+        textView.setOnClickListener(even ->{startActivity(new Intent(this, LoginActivity.class));});
+
+        textView.setText(
+                    SharedPrefManager.getInstance(this).getUsername() + "\n" +
+                    SharedPrefManager.getInstance(this).getUserEmail() + "\n" +
+                    SharedPrefManager.getInstance(this).getUserGender() + "\n" +
+                    SharedPrefManager.getInstance(this).getUserBirthday() + "\n"
+        );
     }
 }
