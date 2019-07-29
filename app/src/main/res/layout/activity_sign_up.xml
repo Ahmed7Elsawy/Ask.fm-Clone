@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.SignUpActivity"
+    android:id="@+id/sign_up_form"
+    android:padding="@dimen/activity_vertical_margin"
+    >
+
+    <LinearLayout
+        android:id="@+id/email_sign_up_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SignUPTextInputLayout"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/email_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                style="@style/SignUPEditText"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SignUPTextInputLayout"
+            >
+
+            <EditText
+                android:id="@+id/password_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/prompt_password"
+                android:imeActionId="6"
+                android:imeActionLabel="@string/action_sign_in_short"
+                android:imeOptions="actionUnspecified"
+                android:inputType="textPassword"
+                style="@style/SignUPEditText"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SignUPTextInputLayout"
+            >
+
+            <EditText
+                android:id="@+id/first_name_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/firstname"
+                android:imeActionId="6"
+                android:imeActionLabel="@string/firstname"
+                android:imeOptions="actionUnspecified"
+                style="@style/SignUPEditText"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/SignUPTextInputLayout"
+            >
+
+            <EditText
+                android:id="@+id/last_name_sign_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/lastname"
+                android:imeActionId="6"
+                android:imeActionLabel="@string/lastname"
+                android:imeOptions="actionUnspecified"
+                style="@style/SignUPEditText"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/gender_id"
+            android:text="@string/gender"
+            android:textSize="@dimen/sign_up_activity_text_size"
+            android:gravity="center|start"
+            style="@style/SignUPTextInputLayout"
+            />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#656865"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/birthday_id"
+            android:text="@string/birthday"
+            android:textSize="@dimen/sign_up_activity_text_size"
+            android:gravity="center|start"
+            style="@style/SignUPTextInputLayout"
+            />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#656865"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            />
+
+        <Button
+            android:id="@+id/email_sign_up_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_sign_up"
+            style="@style/SignUPBtn"
+            />
+
+    </LinearLayout>
+
+
+
+</ScrollView>

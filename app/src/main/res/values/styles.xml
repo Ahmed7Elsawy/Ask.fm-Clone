@@ -6,6 +6,62 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
     </style>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+
+    </style>
+
+    <style name="blackPrimaryDark" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/black</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:actionMenuTextColor">@color/white</item>
+
+    </style>
+
+    <style name="TextLabel" parent="TextAppearance.Design.Hint">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="myCustomMenuTextAppearance" parent="ThemeOverlay.AppCompat.Light">
+        <item name="actionMenuTextColor">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="SignUPTextInputLayout" >
+        <item name="hintTextAppearance">@style/TextLabel</item>
+        <item name="android:layout_marginStart">@dimen/sign_up_activity_text_input_margin_start</item>
+        <item name="android:layout_marginEnd">@dimen/sign_up_activity_text_input_margin_end</item>
+        <item name="android:layout_marginTop">@dimen/sign_up_activity_text_input_margin_top</item>
+        <item name="android:minHeight">@dimen/sign_up_activity_text_input_min_height</item>
+    </style>
+
+    <style name="SignUPEditText">
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/sign_up_activity_text_size</item>
+    </style>
+
+    <style name="SignUPBtn">
+        <item name="android:textAppearance">?android:textAppearanceSmall</item>
+        <item name="android:layout_marginTop">@dimen/sign_up_activity_button_margin_top</item>
+        <item name="android:textSize">@dimen/sign_up_activity_button_text_size</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:layout_marginStart">@dimen/sign_up_activity_button_margin_start</item>
+        <item name="android:layout_marginEnd">@dimen/sign_up_activity_button_margin_end</item>
+    </style>
+    android:text="@string/action_sign_up"
 
 </resources>
