@@ -153,5 +153,8 @@
     <string name="post_answer">post answer post answer post answer post answer post answer post answer post answer post answer post answer</string>
     <string name="post_question">this is a post question this is a post question this is a post question this is a post question this is a post question</string>
     <string name="question_txt">Question txt</string>
+    <string name="setting">Setting</string>
+    <string name="about_app">About App</string>
+    <string name="log_out">Log Out</string>
 
 </resources>
