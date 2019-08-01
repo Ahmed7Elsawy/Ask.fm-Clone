@@ -3,9 +3,6 @@ package com.elsawy.ahmed.sqlaskproject;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by Belal on 26/11/16.
- */
 
 public class SharedPrefManager {
 
@@ -68,6 +65,10 @@ public class SharedPrefManager {
     public String getUsername(){
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USERNAME, null);
+    }
+    public int getUserId(){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return sharedPreferences.getInt(KEY_USER_ID, 0);
     }
 
     public String getUserEmail(){

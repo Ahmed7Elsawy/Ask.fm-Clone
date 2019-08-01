@@ -10,10 +10,10 @@ import com.android.volley.toolbox.Volley;
 public class RequestHandler {
     private static RequestHandler mInstance;
     private RequestQueue mRequestQueue;
-    private static Context mCtx;
+    private static Context context;
 
     private RequestHandler(Context context) {
-        mCtx = context;
+        RequestHandler.context = context;
         mRequestQueue = getRequestQueue();
     }
 
@@ -28,7 +28,7 @@ public class RequestHandler {
         if (mRequestQueue == null) {
             // getApplicationContext() is key, it keeps you from leaking the
             // Activity or BroadcastReceiver if someone passes one in.
-            mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
+            mRequestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
         return mRequestQueue;
     }

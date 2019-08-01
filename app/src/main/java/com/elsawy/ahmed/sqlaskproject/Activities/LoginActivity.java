@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void openMainActivity(){
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
@@ -102,7 +102,7 @@ public class LoginActivity extends AppCompatActivity {
             cancel = true;
         }
 
-        if (TextUtils.isEmpty(password)){// || !isPasswordValid(password)) {
+        if (TextUtils.isEmpty(password)){
             passwordView.setError(getString(R.string.error_invalid_password));
             focusView = passwordView;
             cancel = true;
@@ -120,9 +120,6 @@ public class LoginActivity extends AppCompatActivity {
         return (Pattern.compile("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+", Pattern.UNIX_LINES).matcher(email).matches());
     }
 
-    private boolean isPasswordValid(String password) {
-        return password.length() >= 8;
-    }
 
     private void userLogin(final String email,final String password){
 

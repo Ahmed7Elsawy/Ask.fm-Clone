@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +18,11 @@ import android.widget.Toast;
 
 import com.elsawy.ahmed.sqlaskproject.Activities.AboutActivity;
 import com.elsawy.ahmed.sqlaskproject.Activities.LoginActivity;
+import com.elsawy.ahmed.sqlaskproject.BottomFragments.FriendsFragment;
+import com.elsawy.ahmed.sqlaskproject.BottomFragments.HomeFragment;
+import com.elsawy.ahmed.sqlaskproject.BottomFragments.NotificationFragment;
+import com.elsawy.ahmed.sqlaskproject.BottomFragments.ProfileFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity
@@ -24,6 +31,11 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
     String TAG = "MainActivity";
 
+    HomeFragment homeFragment;
+    NotificationFragment notificationFragment;
+    FriendsFragment friendsFragment;
+    ProfileFragment profileFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +43,12 @@ public class MainActivity extends AppCompatActivity
 
         if(!SharedPrefManager.getInstance(this).isLoggedIn())
             openLoginActivity();
+
+        homeFragment = new HomeFragment();
+        notificationFragment = new NotificationFragment();
+        friendsFragment = new FriendsFragment();
+        profileFragment = new ProfileFragment();
+        setFragment(homeFragment);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -45,8 +63,48 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
+    private void setFragment(Fragment fragment){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.container,fragment);
+        fragmentTransaction.commit();
+    }
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+//                    textView.setText("title_home");
+                    showActionBar();
+                    setFragment(homeFragment);
+                    return true;
+
+                case R.id.navigation_notifications:
+//                    textView.setText("title_notifications");
+                    showActionBar();
+                    setFragment(notificationFragment);
+                    return true;
+                case R.id.navigation_friends:
+//                    textView2.setText("title_friends");
+                    showActionBar();
+                    setFragment(friendsFragment);
+                    return true;
+                case R.id.navigation_profile:
+//                    textView2.setText("title_profile");
+                    hideActionBar();
+                    setFragment(profileFragment);
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     public void onBackPressed() {
@@ -86,7 +144,7 @@ public class MainActivity extends AppCompatActivity
 
     private void openLoginActivity(){
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
