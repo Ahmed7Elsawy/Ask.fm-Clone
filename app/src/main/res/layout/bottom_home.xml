@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".BottomFragments.HomeFragment">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        >
+    <com.google.android.material.tabs.TabLayout
+    android:id="@+id/home_tabs"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:tabGravity="fill"
+    app:tabMode="fixed"
+    android:background="@color/white"
+    app:tabTextColor="@color/lightBlack"
+    app:tabSelectedTextColor="@color/black"
+    />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager_home"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Home fragment"
+        android:layout_gravity="center"
+        android:textSize="30sp"
+        android:gravity="center|bottom"
+        android:paddingBottom="100dp"
+        android:id="@+id/home_fragmentTV"
+
+        />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

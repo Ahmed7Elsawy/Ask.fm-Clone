@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".BottomFragments.NotificationFragment">
+
+    <com.google.android.material.appbar.AppBarLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        >
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/notification_tabs"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            app:tabTextColor="@color/white"
+            app:tabSelectedTextColor="@color/white"
+            android:background="@color/white"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager_notification"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Notification fragment"
+        android:textSize="30sp"
+        android:gravity="center|bottom"
+        android:paddingBottom="100dp"        />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
