@@ -19,6 +19,7 @@ import com.elsawy.ahmed.sqlaskproject.ProfileTabs.BioProfileTab;
 import com.elsawy.ahmed.sqlaskproject.ProfileTabs.LikeProfileTab;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.SharedPrefManager;
+import com.elsawy.ahmed.sqlaskproject.models.Friend;
 import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 
@@ -76,6 +77,8 @@ public class ProfileFragment extends Fragment {
 
         profileUsername.setText(SharedPrefManager.getInstance(this.getContext()).getUsername());
     }
+
+
 
     private void setupTabIcons() {
         tabLayout.getTabAt(0).setIcon(tabIcons[0]);

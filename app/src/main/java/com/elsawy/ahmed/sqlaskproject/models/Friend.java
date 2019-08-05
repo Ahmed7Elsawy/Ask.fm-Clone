@@ -1,7 +1,10 @@
 package com.elsawy.ahmed.sqlaskproject.models;
 
 
-public class Friend  {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Friend implements Parcelable {
 
     private String friendID;
     private boolean favorite;
@@ -16,6 +19,24 @@ public class Friend  {
         this.friendName = friendName;
     }
 
+
+    protected Friend(Parcel in) {
+        friendID = in.readString();
+        favorite = in.readByte() != 0;
+        friendName = in.readString();
+    }
+
+    public static final Creator<Friend> CREATOR = new Creator<Friend>() {
+        @Override
+        public Friend createFromParcel(Parcel in) {
+            return new Friend(in);
+        }
+
+        @Override
+        public Friend[] newArray(int size) {
+            return new Friend[size];
+        }
+    };
 
     public String getFriendID() {
         return friendID;
@@ -39,6 +60,19 @@ public class Friend  {
 
     public void setFriendName(String friendName) {
         this.friendName = friendName;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(friendID);
+        parcel.writeByte((byte) (favorite ? 1 : 0));
+        parcel.writeString(friendName);
     }
 
 

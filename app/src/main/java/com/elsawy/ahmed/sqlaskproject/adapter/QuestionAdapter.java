@@ -1,7 +1,6 @@
 package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -17,7 +16,6 @@ import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.RequestHandler;
 import com.elsawy.ahmed.sqlaskproject.SharedPrefManager;
 import com.elsawy.ahmed.sqlaskproject.Utils.Constants;
-import com.elsawy.ahmed.sqlaskproject.Utils.Utilties;
 import com.elsawy.ahmed.sqlaskproject.models.Question;
 import com.elsawy.ahmed.sqlaskproject.viewholder.QuestionViewHolder;
 
@@ -86,7 +84,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
                                 Timestamp timestamp = Timestamp.valueOf(JSONquestion.getString("question_time"));
                                 currentQuestion.setQuestionTimestamp(timestamp.getTime());
                                 currentQuestion.setAskerID(JSONquestion.getString("asker_id"));
-                                currentQuestion.setReceiver_userID(JSONquestion.getString("receiver_id"));
+                                currentQuestion.setReceiverID(JSONquestion.getString("receiver_id"));
                                 currentQuestion.setAnonymous(JSONquestion.getBoolean("anonymous"));
 
                                 questionsList.add(currentQuestion);

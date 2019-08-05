@@ -1,8 +1,10 @@
 package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.RequestHandler;
 import com.elsawy.ahmed.sqlaskproject.SharedPrefManager;
@@ -161,7 +164,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", "26");
+                params.put("user_id", String.valueOf(SharedPrefManager.getInstance(FriendsAdapter.this.mContext).getUserId()));
 
                 return params;
             }
@@ -170,5 +173,14 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
         RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
     }
+
+
+    View.OnClickListener cardViewClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(FriendsAdapter.this.mContext, ProfileActivity.class);
+        }
+    };
+
 
 }

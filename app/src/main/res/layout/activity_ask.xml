@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:padding="@dimen/ask_and_answer_activity_padding"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ask_and_answer_activity_header_layout_height"
+        android:orientation="horizontal"
+        android:background="@drawable/ask_activity_header_background"
+        >
+        <ImageView
+            android:id="@+id/cancel_question_action"
+            android:layout_width="@dimen/ask_and_answer_activity_cancel_width_height"
+            android:layout_height="@dimen/ask_and_answer_activity_cancel_width_height"
+            android:src="@drawable/ic_clear_white_24dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/ask_and_answer_activity_cancel_margin_start"
+            android:layout_marginEnd="@dimen/ask_and_answer_activity_cancel_margin_end"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="@string/ask_a_question"
+            android:layout_weight="1"
+            android:textSize="@dimen/ask_and_answer_activity_edit_text_text_size"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            />
+
+        <ImageButton
+            android:id="@+id/send_question_action"
+            android:layout_width="@dimen/ask_and_answer_activity_send_width_height"
+            android:layout_height="@dimen/ask_and_answer_activity_send_width_height"
+            android:src="@drawable/ic_send_black_24dp"
+            android:layout_marginEnd="@dimen/ask_and_answer_activity_send_margin_end"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:background="@color/colorPrimary"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".Activities.AskActivity"
+        android:orientation="vertical"
+        android:background="@color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ask_user_image"
+                android:layout_width="@dimen/user_image_height_width"
+                android:layout_height="@dimen/user_image_height_width"
+                android:src="@drawable/profile_image"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/answer_activity_image_margin_start"
+                android:layout_marginTop="@dimen/answer_activity_image_margin_top"
+                android:layout_marginEnd="@dimen/answer_activity_image_margin_end"
+                />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/user_name"
+                android:textSize="@dimen/answer_activity_user_name_text_size"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/question_editText"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="@dimen/answer_question_activity_answer_padding"
+            android:gravity="start"
+            android:textColor="@color/black"
+            android:textSize="@dimen/answer_question_activity_answer_text_size"
+            android:hint="@string/what_when_why_ask"
+            android:maxLength="300"
+            android:layout_marginTop="@dimen/answer_activity_answer_margin_top"
+            android:inputType="text" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/answer_activity_bottom_layout_height"
+            android:orientation="horizontal"
+            >
+
+            <ImageView
+                android:layout_width="@dimen/answer_activity_visible_button_layout_height_width"
+                android:layout_height="@dimen/answer_activity_visible_button_layout_height_width"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_radio_button_unchecked_black_24dp"
+                android:layout_marginStart="@dimen/answer_activity_bottom_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+            <RelativeLayout
+                android:id="@+id/anonymous_user_layout"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/anonymous_layout_background"
+                >
+
+                <TextView
+                    android:id="@+id/anonymous_user_TV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/ask_anonymously"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/anonymous_user_btn"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/profile_image"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="#FFFFFF"
+                    />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/letter_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/question_letter_count"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/answer_activity_litter_count_text_size"
+                android:layout_marginEnd="@dimen/answer_activity_bottom_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</LinearLayout>

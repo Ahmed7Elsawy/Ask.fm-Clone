@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.Utils.Utilties;
 import com.elsawy.ahmed.sqlaskproject.models.Answer;
 
@@ -47,7 +46,7 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
     public void bindToAnswer(Answer answer, View.OnClickListener likeClickListener) {
         question_text_TV.setText(answer.question.getQuestionText());
         answer_text_TV.setText(answer.answerText);
-        username_TV.setText(answer.question.getReceiver_userID());
+        username_TV.setText(answer.question.getReceiverID());
         answer_time_TV.setText(Utilties.getTimeAgo(answer.timestamp));
         answer_likes_count_TV.setText(String.valueOf(answer.likesCount));
 

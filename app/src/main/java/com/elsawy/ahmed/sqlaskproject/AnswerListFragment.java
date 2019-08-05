@@ -72,7 +72,7 @@
 //                    public void onClick(View starView) {
 //                        // Need to write to both places the post is stored
 //                        DatabaseReference globalPostRef = mDatabase.child("user-objects").child("global-answers").child(postRef.getKey());
-//                        DatabaseReference userPostRef = mDatabase.child("user-objects").child("user-answers").child(currentAnswer.question.getReceiver_userID()).child(postRef.getKey());
+//                        DatabaseReference userPostRef = mDatabase.child("user-objects").child("user-answers").child(currentAnswer.question.getReceiverID()).child(postRef.getKey());
 //
 //                        // Run two transactions
 //                        onStarClicked(globalPostRef);

@@ -1,7 +1,6 @@
 package com.elsawy.ahmed.sqlaskproject.viewholder;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,7 +37,7 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
 
         question_txt.setText(currentQuestion.getQuestionText());
         question_time.setText(Utilties.getTimeAgo(currentQuestion.getQuestionTimestamp()));
-        if(!currentQuestion.isAnonymous()){
+        if(!currentQuestion.getAnonymous()){
             profile_asker_image.setImageDrawable(context.getResources().getDrawable(R.drawable.profile_image));
         }
 

@@ -1,6 +1,7 @@
 package com.elsawy.ahmed.sqlaskproject.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,8 +10,10 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.Utils.Utilties;
+import com.elsawy.ahmed.sqlaskproject.adapter.FriendsAdapter;
 import com.elsawy.ahmed.sqlaskproject.models.Friend;
 import com.elsawy.ahmed.sqlaskproject.models.Question;
 
@@ -36,7 +39,16 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
     public void bindToFriend(Context context, Friend currentFriend){
 
         friend_name.setText(currentFriend.getFriendName());
-        handleFavoriteImage(currentFriend.getFavorite());
+        this.handleFavoriteImage(currentFriend.getFavorite());
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProfileActivity.class);
+                intent.putExtra("ProfileInfo",currentFriend);
+                context.startActivity(intent);
+            }
+        });
     }
 
 
@@ -56,4 +68,12 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
 //            }
 //        });
     }
+
+//    View.OnClickListener cardViewClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            Intent intent = new Intent(this.mContext, ProfileActivity.class);
+//        }
+//    };
+
 }
