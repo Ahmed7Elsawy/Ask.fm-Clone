@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment {
         this.adapter = new ViewPagerAdapter(getFragmentManager());
 
         Bundle args = new Bundle();
-//        args.putString("profileID", getUserKey());
+        args.putString("profileID", SharedPrefManager.getInstance(ProfileFragment.this.getContext()).getUserId());
 
         AnswerProfileTab answerProfileTab = new AnswerProfileTab();
         answerProfileTab.setArguments(args);
@@ -103,11 +103,6 @@ public class ProfileFragment extends Fragment {
         this.adapter.addFragment(bioProfileTab, "bio");
         viewPager.setAdapter(this.adapter);
     }
-//    private String getUserKey(){
-//        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-//        FirebaseUser userData = mAuth.getCurrentUser();
-//        return userData.getUid();
-//    }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
         private final ArrayList mFragmentList = new ArrayList();

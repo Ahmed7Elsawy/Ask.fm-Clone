@@ -32,7 +32,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
 
 
     private Context mContext;
-    private int userId;
+    private String userId;
 
 
     private ArrayList<Question> questionsList = new ArrayList<>();
@@ -114,7 +114,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("receiver_id", String.valueOf(userId));
+                params.put("receiver_id", userId);
                 return params;
             }
 

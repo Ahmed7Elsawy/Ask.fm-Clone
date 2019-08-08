@@ -80,7 +80,7 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Question question = new Question();
-            String userID = String.valueOf(SharedPrefManager.getInstance(ProfileActivity.this).getUserId());
+            String userID =SharedPrefManager.getInstance(ProfileActivity.this).getUserId();
             question.setAskerID(userID);
             question.setReceiverID(profileID);
             Intent intent=new Intent(ProfileActivity.this, AskActivity.class);

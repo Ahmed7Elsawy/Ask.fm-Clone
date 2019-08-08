@@ -8,13 +8,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.elsawy.ahmed.sqlaskproject.R;
+import com.elsawy.ahmed.sqlaskproject.Utils.VerticalSpaceItemDecoration;
+import com.elsawy.ahmed.sqlaskproject.adapter.AnswerAdapter;
 
 
 public class AnswerProfileTab extends Fragment {
 
-    String profileID;
+    private String profileID;
+    private RecyclerView mRecycler;
 
     public AnswerProfileTab() {
         // Required empty public constructor
@@ -34,21 +40,16 @@ public class AnswerProfileTab extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.profile_answer_tab, container, false);
 
+        mRecycler = rootView.findViewById(R.id.recycler_view_profile_answers);
+        mRecycler.addItemDecoration(new VerticalSpaceItemDecoration(10));
+        mRecycler.setItemAnimator(new DefaultItemAnimator());
+        mRecycler.setLayoutManager(new LinearLayoutManager(AnswerProfileTab.this.getContext()));
 
-//        mRecycler = rootView.findViewById(R.id.recycler_view_profile_answers);
-//        mRecycler.addItemDecoration(new VerticalSpaceItemDecoration(10));
-//        mRecycler.setItemAnimator(new DefaultItemAnimator());
+        AnswerAdapter adapter = new AnswerAdapter(AnswerProfileTab.this.getContext(), profileID, "ProfileTab");
+        mRecycler.setAdapter(adapter);
 
         return rootView;
 
     }
-
-//    @Override
-//    public Query getQuery(DatabaseReference databaseReference) {
-////        String myUserId = getUid();
-//        Query myTopPostsQuery = databaseReference.child("user-objects").child("user-answers").child(profileID);
-//
-//        return myTopPostsQuery;
-//    }
 
 }

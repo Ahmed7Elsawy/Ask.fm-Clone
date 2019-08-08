@@ -8,13 +8,19 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.elsawy.ahmed.sqlaskproject.R;
+import com.elsawy.ahmed.sqlaskproject.Utils.VerticalSpaceItemDecoration;
+import com.elsawy.ahmed.sqlaskproject.adapter.AnswerAdapter;
 
 
 public class LikeProfileTab extends Fragment {
 
-    String profileID;
+    private String profileID;
+    private RecyclerView mRecycler;
 
     public LikeProfileTab() {
         // Required empty public constructor
@@ -35,20 +41,15 @@ public class LikeProfileTab extends Fragment {
         View rootView = inflater.inflate(R.layout.profile_like_tab, container, false);
 
 
-//        mRecycler = rootView.findViewById(R.id.recycler_view_profile_like);
-//        mRecycler.addItemDecoration(new VerticalSpaceItemDecoration(10));
-//        mRecycler.setItemAnimator(new DefaultItemAnimator());
+        mRecycler = rootView.findViewById(R.id.recycler_view_profile_like);
+        mRecycler.addItemDecoration(new VerticalSpaceItemDecoration(10));
+        mRecycler.setItemAnimator(new DefaultItemAnimator());
+        mRecycler.setLayoutManager(new LinearLayoutManager(LikeProfileTab.this.getContext()));
+
+        AnswerAdapter adapter = new AnswerAdapter(LikeProfileTab.this.getContext(), profileID, "LikeTab");
+        mRecycler.setAdapter(adapter);
 
         return rootView;
     }
-
-//    @Override
-//    public Query getQuery(DatabaseReference databaseReference) {
-//        String myUserId = getUid();
-//        Query myTopPostsQuery = databaseReference.child("user-objects").child("user-answers").child(profileID)
-//                .orderByChild("likesCount");
-//
-//        return myTopPostsQuery;
-//    }
 
 }

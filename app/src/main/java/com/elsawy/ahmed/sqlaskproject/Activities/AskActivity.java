@@ -82,10 +82,6 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
             sendQuestion(currentQuestion);
             Log.i("AskedQuestion",currentQuestion.getAskerID() + "  "+currentQuestion.getReceiverID() + "  "+currentQuestion.getQuestionText() + "  " + currentQuestion.getAnonymous());
 
-//            String questionKey =  AskActivity.this.ref.child("user-objects").child("questions").child(currentQuestion.getReceiverID()).push().getKey();//.setValue(currentQuestion);
-//            currentQuestion.setQuestionKey(questionKey);
-//            AskActivity.this.ref.child("user-objects").child("questions").child(currentQuestion.getReceiverID()).child(currentQuestion.getQuestionKey()).setValue(currentQuestion);
-
             finish();
         }
     }
@@ -139,7 +135,7 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
     private void sendQuestion(Question currentQuestion){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_InsertQuestion,
+                Constants.URL_URL_INSERT_QUESTION,
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);

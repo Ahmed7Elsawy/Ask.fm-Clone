@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_margin="@dimen/item_answer_action_layout_margin">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_answer_action_layout_height"
+        >
+
+        <ImageButton
+            android:id="@+id/answer_like_image"
+            android:layout_width="@dimen/item_answer_action_item_height_width"
+            android:layout_height="@dimen/item_answer_action_item_height_width"
+            android:layout_marginStart="@dimen/item_answer_action_item_margin"
+            android:src="@drawable/ic_like_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/answer_like_count_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_answer_action_item_margin"
+            android:text="20"
+            android:textColor="@color/black"
+            android:textSize="@dimen/item_answer_action_text_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/answer_like_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/answer_re_ask"
+            android:layout_width="@dimen/item_answer_action_item_height_width"
+            android:layout_height="@dimen/item_answer_action_item_height_width"
+            android:layout_marginEnd="@dimen/item_answer_action_item_margin"
+            android:src="@drawable/ic_send_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/answer_setting"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitXY"
+            />
+
+        <ImageView
+            android:id="@+id/answer_setting"
+            android:layout_width="@dimen/item_answer_action_item_height_width"
+            android:layout_height="@dimen/item_answer_action_item_height_width"
+            android:layout_marginEnd="@dimen/item_answer_action_item_margin"
+            android:src="@drawable/ic_setting_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:scaleType="fitXY"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/show_thread_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        >
+        <TextView
+            android:id="@+id/question_thread_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+1 answer in: "
+            android:textColor="@color/colorPrimary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:id="@+id/first_question_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="first question first question first question first question"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:padding="5dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/read_more_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:visibility="gone"
+            >
+            <TextView
+                android:id="@+id/read_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/read_more"
+                android:textColor="@color/defaultTextColor"
+                android:textSize="12sp"
+                android:padding="5dp"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

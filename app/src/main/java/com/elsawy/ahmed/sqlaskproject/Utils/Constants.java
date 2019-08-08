@@ -8,6 +8,8 @@ public class Constants {
     public static final String URL_LOGIN = ROOT_URL + "userLogin.php";
     public static final String URL_QUESTION = ROOT_URL + "handleQuestion.php";
     public static final String URL_FRIENDS = ROOT_URL + "getFriends.php";
-    public static final String URL_InsertQuestion = ROOT_URL + "InsertQuestion.php";
+    public static final String URL_URL_INSERT_QUESTION = ROOT_URL + "InsertQuestion.php";
+    public static final String URL_INSERT_ANSWER = ROOT_URL + "InsertAnswer.php";
+    public static final String URL_SELECT_ANSWER = ROOT_URL + "SelectAnswer.php";
 
 }

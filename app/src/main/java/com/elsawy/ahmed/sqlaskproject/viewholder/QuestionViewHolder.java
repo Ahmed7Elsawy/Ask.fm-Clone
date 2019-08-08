@@ -1,6 +1,7 @@
 package com.elsawy.ahmed.sqlaskproject.viewholder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.elsawy.ahmed.sqlaskproject.Activities.AnswerTheQuestionsActivity;
+import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.Utils.Utilties;
 import com.elsawy.ahmed.sqlaskproject.models.Question;
@@ -42,8 +45,16 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
         }
 
 
+        question_cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AnswerTheQuestionsActivity.class);
+                intent.putExtra("questionInfo",currentQuestion);
+                context.startActivity(intent);
+            }
+        });
+
 //        question_txt.setOnClickListener(new answerQuestionListener(currentQuestion));
-//        question_cardView.setOnClickListener(new answerQuestionListener(currentQuestion));
 
     }
 }

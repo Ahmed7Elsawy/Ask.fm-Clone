@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(!obj.getBoolean("error")){
                             SharedPrefManager.getInstance(getApplicationContext())
                                     .userLogin(
-                                            obj.getInt("id"),
+                                            obj.getString("id"),
                                             obj.getString("username"),
                                             obj.getString("email"),
                                             obj.getString("gender"),

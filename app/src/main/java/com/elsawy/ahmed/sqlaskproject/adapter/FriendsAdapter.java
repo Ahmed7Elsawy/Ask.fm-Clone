@@ -35,7 +35,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
     private String TAG = "FriendsAdapter";
     private Context mContext;
-    private int userId;
+    private String userId;
 
 
     private ArrayList<Friend> friendsList = new ArrayList<>();

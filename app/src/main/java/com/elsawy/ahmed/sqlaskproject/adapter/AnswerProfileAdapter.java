@@ -98,8 +98,8 @@
 //        return answersList.size();
 //    }
 //
-//    private void updateLikeCount(int count, String answerKey) {
-//        this.ref.child("user-objects").child("answers").child(this.profileID).child(answerKey).child("answerLikesCount").setValue(count);
+//    private void updateLikeCount(int count, String answerID) {
+//        this.ref.child("user-objects").child("answers").child(this.profileID).child(answerID).child("answerLikesCount").setValue(count);
 //    }
 //
 //    private boolean checkIsLike(ArrayList<Like> likeList) {
