@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_post_card_view"
+    android:id="@+id/item_answer_card_view"
     android:background="@color/black"
     >
 

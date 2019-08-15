@@ -1,8 +1,10 @@
 package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.RequestHandler;
 import com.elsawy.ahmed.sqlaskproject.SharedPrefManager;
@@ -34,6 +37,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
     private Context mContext;
     private String profileId;
     private String tab;
+    private boolean isProfile;
 
     private ArrayList<Answer> answersList = new ArrayList<>();
 
@@ -41,6 +45,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         this.mContext = mContext;
         this.profileId = SharedPrefManager.getInstance(mContext).getUserId();
         this.tab = tab;
+        this.isProfile = false;
         getAnswers();
     }
 
@@ -48,6 +53,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         this.mContext = mContext;
         this.profileId = profileId;
         this.tab = tab;
+        this.isProfile = true;
         getAnswers();
     }
 
@@ -61,7 +67,17 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
     public void onBindViewHolder(@NonNull AnswerViewHolder holder, int position) {
         final Answer currentAnswer = AnswerAdapter.this.answersList.get(position);
 
-        holder.bindToAnswer(currentAnswer);
+        View.OnClickListener openProfileClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, ProfileActivity.class);
+                intent.putExtra("ProfileID", currentAnswer.getQuestion().getReceiverID());
+                intent.putExtra("ProfileUsername", currentAnswer.getUsername());
+                mContext.startActivity(intent);
+            }
+        };
+
+        holder.bindToAnswer(currentAnswer,isProfile,openProfileClickListener);
 
     }
 
@@ -69,7 +85,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
     public int getItemCount() {
         return answersList.size();
     }
-
 
     private void getAnswers() {
         StringRequest stringRequest = new StringRequest(
@@ -133,6 +148,5 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
 
         RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
     }
-
 
 }

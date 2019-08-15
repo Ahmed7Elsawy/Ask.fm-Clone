@@ -28,7 +28,7 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
     private ImageButton like_btn;
     private ImageView reAsk_btn;
     private ImageView answer_setting_image;
-    private CardView itemPostCardView;
+    private CardView itemAnswerCardView;
 
     public AnswerViewHolder(@NonNull View itemView) {
         super(itemView);
@@ -41,16 +41,22 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
         like_btn = (ImageButton) itemView.findViewById(R.id.answer_like_image);
         reAsk_btn = (ImageView) itemView.findViewById(R.id.answer_re_ask);
         answer_setting_image = (ImageView) itemView.findViewById(R.id.answer_setting);
-        itemPostCardView = (CardView) itemView.findViewById(R.id.item_post_card_view);
+        itemAnswerCardView = (CardView) itemView.findViewById(R.id.item_answer_card_view);
     }
 
-    public void bindToAnswer(Answer answer){//, View.OnClickListener likeClickListener) {
+    public void bindToAnswer(Answer answer,boolean isProfile, View.OnClickListener openProfileClickListener){//, View.OnClickListener likeClickListener) {
         question_text_TV.setText(answer.getQuestion().getQuestionText());
         answer_text_TV.setText(answer.getAnswerText());
         username_TV.setText(answer.getUsername());
         answer_time_TV.setText(Utilties.getTimeAgo(answer.getTimestamp()));
         answer_likes_count_TV.setText(String.valueOf(answer.getLikesCount()));
 
-        //like_btn.setOnClickListener(likeClickListener);
+        if (isProfile) {
+            user_profile_image.setVisibility(View.GONE);
+            username_TV.setVisibility(View.GONE);
+        }
+
+        user_profile_image.setOnClickListener(openProfileClickListener);
+        username_TV.setOnClickListener(openProfileClickListener);
     }
 }

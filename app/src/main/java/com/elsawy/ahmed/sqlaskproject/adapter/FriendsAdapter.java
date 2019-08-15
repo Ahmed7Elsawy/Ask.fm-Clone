@@ -58,7 +58,19 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
         final Friend currentFriend = FriendsAdapter.this.friendsList.get(position);
 
-        holder.bindToFriend(this.mContext, currentFriend);
+
+        View.OnClickListener favoriteClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (currentFriend.getFavorite()) {
+                    currentFriend.setFavorite(false);
+                } else {
+                    currentFriend.setFavorite(true);
+                }
+            }
+        };
+
+        holder.bindToFriend(this.mContext, currentFriend, favoriteClickListener);
 
 
 //        holder.friend_name.setText(currentFriend.getFriendName());
@@ -104,17 +116,11 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 //        });
 //    }
 
-//    private void openProfileActivity(Friend currentFriend){
-//        Intent intent=new Intent(FriendsAdapter.this.mContext, ProfileActivity.class);
-//        intent.putExtra("ProfileInfo",currentFriend);
-//        FriendsAdapter.this.mContext.startActivity(intent);
-//    }
 
     @Override
     public int getItemCount() {
         return friendsList.size();
     }
-
 
     private void getFriends() {
         StringRequest stringRequest = new StringRequest(
@@ -174,13 +180,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
         RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
     }
 
-
-    View.OnClickListener cardViewClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent(FriendsAdapter.this.mContext, ProfileActivity.class);
-        }
-    };
 
 
 }
