@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.elsawy.ahmed.sqlaskproject.HomeTabs.DiscoverTab;
-import com.elsawy.ahmed.sqlaskproject.HomeTabs.VersusTab;
 import com.elsawy.ahmed.sqlaskproject.HomeTabs.WallTab;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.google.android.material.tabs.TabLayout;
@@ -49,7 +48,6 @@ public class HomeFragment extends Fragment {
     private void setupViewPager(ViewPager viewPager) {
         this.adapter = new ViewPagerAdapter(getFragmentManager());
         this.adapter.addFragment(new WallTab(), "WALL");
-        this.adapter.addFragment(new VersusTab(), "VERSUS");
         this.adapter.addFragment(new DiscoverTab(), "DISCOVER");
         viewPager.setAdapter(this.adapter);
     }
