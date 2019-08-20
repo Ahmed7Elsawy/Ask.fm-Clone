@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.Utils.VerticalSpaceItemDecoration;
 import com.elsawy.ahmed.sqlaskproject.adapter.FriendsAdapter;
+import com.elsawy.ahmed.sqlaskproject.adapter.PeopleMayKnowAdapter;
 
 
 public class FriendsFragment extends Fragment {
@@ -29,12 +30,21 @@ public class FriendsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView =  inflater.inflate(R.layout.bottom_friends, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_friends);
-        recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(5));
-        FriendsAdapter mAdapter = new FriendsAdapter(getActivity());
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(mAdapter);
+        RecyclerView friendsRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_friends);
+        friendsRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(1));
+        FriendsAdapter friendsAdapter = new FriendsAdapter(getActivity());
+        friendsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        friendsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        friendsRecyclerView.setAdapter(friendsAdapter);
+
+        RecyclerView peopleMayKnowRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_people_may_be_know);
+        peopleMayKnowRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(1));
+        PeopleMayKnowAdapter peopleMayKnowAdapter = new PeopleMayKnowAdapter(getActivity());
+        peopleMayKnowRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        peopleMayKnowRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        peopleMayKnowRecyclerView.setAdapter(peopleMayKnowAdapter);
+
+
 
         return rootView;
     }

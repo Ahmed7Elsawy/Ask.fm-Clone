@@ -22,6 +22,7 @@ import com.elsawy.ahmed.sqlaskproject.BottomFragments.FriendsFragment;
 import com.elsawy.ahmed.sqlaskproject.BottomFragments.HomeFragment;
 import com.elsawy.ahmed.sqlaskproject.BottomFragments.NotificationFragment;
 import com.elsawy.ahmed.sqlaskproject.BottomFragments.ProfileFragment;
+import com.elsawy.ahmed.sqlaskproject.Utils.Utilties;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 

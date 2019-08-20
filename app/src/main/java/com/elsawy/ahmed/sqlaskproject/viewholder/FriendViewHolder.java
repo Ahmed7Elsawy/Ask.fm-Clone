@@ -22,7 +22,6 @@ import com.elsawy.ahmed.sqlaskproject.SharedPrefManager;
 import com.elsawy.ahmed.sqlaskproject.Utils.Constants;
 import com.elsawy.ahmed.sqlaskproject.models.Friend;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +36,7 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
     private ImageView favorite_friend;
     private CircleImageView profile_friend_image;
     private ImageView accepted_image;
+    private ImageView add_friend_image;
     private CardView cardView;
 
     public FriendViewHolder(@NonNull View itemView) {
@@ -45,10 +45,15 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
         friend_name = (TextView) itemView.findViewById(R.id.friend_name);
         favorite_friend = (ImageView) itemView.findViewById(R.id.favorite_friend);
         accepted_image = (ImageView) itemView.findViewById(R.id.accepted_image_friend);
+        add_friend_image = (ImageView) itemView.findViewById(R.id.add_image_friend);
         cardView = (CardView) itemView.findViewById(R.id.friend_item_card_view);
         profile_friend_image = (CircleImageView) itemView.findViewById(R.id.profile_image_friend);
     }
-    public void bindToFriend(Context context, Friend currentFriend, View.OnClickListener favoriteClickListener) {
+    public void bindToFriend(Context context, Friend currentFriend, View.OnClickListener favoriteClickListener, View.OnClickListener deleteFriendClickListener) {
+
+        add_friend_image.setVisibility(View.GONE);
+        favorite_friend.setVisibility(View.VISIBLE);
+        accepted_image.setVisibility(View.VISIBLE);
 
         friend_name.setText(currentFriend.getFriendName());
         this.setFavoriteImage(currentFriend.getFavorite());
@@ -65,17 +70,33 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
         favorite_friend.setOnClickListener(view -> {
             if (currentFriend.getFavorite()) {
                 currentFriend.setFavorite(false);
-//                    FriendsAdapter.this.ref.child("user-objects").child("friends").child(FriendsAdapter.this.userData.getUid()).child(currentFriend.getFriendID()).child("favorite").setValue(false);
             } else {
                 currentFriend.setFavorite(true);
-//                    FriendsAdapter.this.ref.child("user-objects").child("friends").child(FriendsAdapter.this.userData.getUid()).child(currentFriend.getFriendID()).child("favorite").setValue(true);
             }
             updateFavorite(context,currentFriend.getFriendID(),currentFriend.getFavorite());
             setFavoriteImage(currentFriend.getFavorite());
-
         });
+
+        accepted_image.setOnClickListener(deleteFriendClickListener);
     }
 
+    public void bindToPeopleMayKnow(Context context, Friend currentFriend, View.OnClickListener addFriendClickListener) {
+
+        add_friend_image.setVisibility(View.VISIBLE);
+        favorite_friend.setVisibility(View.GONE);
+        accepted_image.setVisibility(View.GONE);
+
+        friend_name.setText(currentFriend.getFriendName());
+        cardView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, ProfileActivity.class);
+            intent.putExtra("ProfileID", currentFriend.getFriendID());
+            intent.putExtra("ProfileUsername", currentFriend.getFriendName());
+            intent.putExtra("friendFavorite", String.valueOf(currentFriend.getFavorite()));
+            context.startActivity(intent);
+        });
+        add_friend_image.setOnClickListener(addFriendClickListener);
+
+    }
 
     private void setFavoriteImage(Boolean isFavorite){
         if (isFavorite)

@@ -1,7 +1,6 @@
 package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
-import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.RequestHandler;
 import com.elsawy.ahmed.sqlaskproject.SharedPrefManager;
@@ -57,65 +55,23 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
     public void onBindViewHolder(@NonNull FriendViewHolder holder, final int position) {
 
         final Friend currentFriend = FriendsAdapter.this.friendsList.get(position);
-
-
-        View.OnClickListener favoriteClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (currentFriend.getFavorite()) {
-                    currentFriend.setFavorite(false);
-                } else {
-                    currentFriend.setFavorite(true);
-                }
+        View.OnClickListener favoriteClickListener = view -> {
+            if (currentFriend.getFavorite()) {
+                currentFriend.setFavorite(false);
+            } else {
+                currentFriend.setFavorite(true);
             }
         };
 
-        holder.bindToFriend(this.mContext, currentFriend, favoriteClickListener);
+        View.OnClickListener deleteFriendClickListener = view -> {
+            deleteFriend(this.mContext,currentFriend.getFriendID());
+            friendsList.remove(position);
+            notifyDataSetChanged();
+        };
 
+        holder.bindToFriend(this.mContext, currentFriend, favoriteClickListener,deleteFriendClickListener);
 
-//        holder.friend_name.setText(currentFriend.getFriendName());
-//
-//        handleFavoriteImage(holder,currentFriend);
-//
-//        holder.cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                openProfileActivity(currentFriend);
-//            }
-//        });
-//
-//        holder.friend_name.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                openProfileActivity(currentFriend);
-//            }
-//        });
-//
-//        holder.profile_friend_image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                openProfileActivity(currentFriend);
-//            }
-//        });
     }
-
-//    private void handleFavoriteImage(@NonNull MyViewHolder holder,final Friend currentFriend){
-//        if (currentFriend.getFavorite())
-//            holder.favorite_friend.setImageResource(R.drawable.ic_stars_yellow_24dp);
-//        else
-//            holder.favorite_friend.setImageResource(R.drawable.ic_star_black_24dp);
-//
-//        holder.favorite_friend.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (currentFriend.getFavorite())
-//                    FriendsAdapter.this.ref.child("user-objects").child("friends").child(FriendsAdapter.this.userData.getUid()).child(currentFriend.getFriendID()).child("favorite").setValue(false);
-//                else
-//                    FriendsAdapter.this.ref.child("user-objects").child("friends").child(FriendsAdapter.this.userData.getUid()).child(currentFriend.getFriendID()).child("favorite").setValue(true);
-//            }
-//        });
-//    }
-
 
     @Override
     public int getItemCount() {
@@ -148,38 +104,62 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                             notifyDataSetChanged();
 
                         } else {
-                            Toast.makeText(
-                                    mContext,
-                                    obj.getString("message"),
-                                    Toast.LENGTH_LONG
-                            ).show();
+                            Toast.makeText(mContext, obj.getString("message"), Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 },
                 error -> {
-
-                    Toast.makeText(
-                            mContext,
-                            error.getMessage(),
-                            Toast.LENGTH_LONG
-                    ).show();
+                    Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG).show();
                 }
         ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
-                params.put("user_id", String.valueOf(SharedPrefManager.getInstance(FriendsAdapter.this.mContext).getUserId()));
+                params.put("user_id", userId);
+
+                return params;
+            }
+        };
+
+        RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
+    }
+
+    private void deleteFriend(Context context, String friend_id) {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_FRIENDS,
+                response -> {
+                    try {
+                        JSONObject obj = new JSONObject(response);
+
+                        if (obj.getBoolean("error")) {
+                            Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", String.valueOf(SharedPrefManager.getInstance(context).getUserId()));
+                params.put("friend_id", friend_id);
+                params.put("delete", "delete");
 
                 return params;
             }
 
         };
 
-        RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
-    }
+        RequestHandler.getInstance(context).addToRequestQueue(stringRequest);
 
+    }
 
 
 }

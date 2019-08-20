@@ -3,8 +3,16 @@ package com.elsawy.ahmed.sqlaskproject.Utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.util.Log;
 
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+import java.util.TimeZone;
 
 
 public class Utilties {
@@ -13,11 +21,12 @@ public class Utilties {
 
     public static String getTimeAgo(long timestamp) {
         String s;
-        long now = System.currentTimeMillis();
-        long difTime = (now - timestamp) / 1000;
+        long Now = System.currentTimeMillis();
+
+        long difTime = (Now - timestamp) / 1000;
 
 
-        if (timestamp > now || timestamp <= 0) {
+        if (timestamp > Now || timestamp <= 0) {
             return null;
         }
         if (difTime == YEAR_SECOND)
@@ -42,6 +51,28 @@ public class Utilties {
         else
             s = "just now";
         return s;
+    }
+
+    public static void getTime(){
+        Date today = new Date();
+
+        //displaying this date on IST timezone
+        DateFormat df = new SimpleDateFormat("dd-MM-yy HH:mm:SS z");
+        df.setTimeZone(TimeZone.getTimeZone("Asia/Kolkata"));
+        String IST = df.format(today);
+
+        Log.i("TGTGTG4",today+"");
+        Log.i("TGTGTG5",IST);
+
+        Timestamp timestamp = Timestamp.valueOf(IST);
+
+        long Now = System.currentTimeMillis();
+        Log.i("TGTGTG1",today.getTime()+"");
+        Log.i("TGTGTG2",Now+"");
+        Log.i("TGTGTG3",timestamp.getTime()+"");
+
+
+
     }
 
 
