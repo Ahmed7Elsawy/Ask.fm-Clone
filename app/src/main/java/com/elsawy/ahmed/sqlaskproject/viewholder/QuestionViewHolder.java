@@ -45,13 +45,10 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
         }
 
 
-        question_cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, AnswerTheQuestionsActivity.class);
-                intent.putExtra("questionInfo",currentQuestion);
-                context.startActivity(intent);
-            }
+        question_cardView.setOnClickListener(view -> {
+            Intent intent = new Intent(context, AnswerTheQuestionsActivity.class);
+            intent.putExtra("questionInfo",currentQuestion);
+            context.startActivity(intent);
         });
 
 //        question_txt.setOnClickListener(new answerQuestionListener(currentQuestion));

@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".NotificationTabs.AnswerNotificationTab">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Answer notification fragment"
-        android:textSize="30sp"
-        android:gravity="center"
-        />
+
 
 </FrameLayout>

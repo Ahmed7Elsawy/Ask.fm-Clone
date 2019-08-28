@@ -63,6 +63,7 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
             Intent intent = new Intent(context, ProfileActivity.class);
             intent.putExtra("ProfileID", currentFriend.getFriendID());
             intent.putExtra("ProfileUsername", currentFriend.getFriendName());
+            intent.putExtra("isFriend", "true");
             intent.putExtra("friendFavorite", String.valueOf(currentFriend.getFavorite()));
             context.startActivity(intent);
         });
@@ -91,6 +92,7 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
             Intent intent = new Intent(context, ProfileActivity.class);
             intent.putExtra("ProfileID", currentFriend.getFriendID());
             intent.putExtra("ProfileUsername", currentFriend.getFriendName());
+            intent.putExtra("isFriend", "false");
             intent.putExtra("friendFavorite", String.valueOf(currentFriend.getFavorite()));
             context.startActivity(intent);
         });

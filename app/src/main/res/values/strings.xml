@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ask Project</string>
+    <string name="app_name">Ask</string>
     <string name="title_activity_login">Sign in</string>
     <string name="title_activity_sign_up">Sign up</string>
     <string name="title_activity_main">Ask Project</string>

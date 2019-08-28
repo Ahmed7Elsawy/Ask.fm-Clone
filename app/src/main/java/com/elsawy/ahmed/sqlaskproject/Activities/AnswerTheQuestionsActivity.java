@@ -33,8 +33,6 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
 
     private Answer currentAnswer;
 
-//    private DatabaseReference ref;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,8 +40,6 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
 
         Question currentQuestion = (Question) getIntent().getParcelableExtra("questionInfo");
         this.currentAnswer = new Answer(currentQuestion);
-
-//        ref = FirebaseDatabase.getInstance().getReference();
 
         questionTV = (TextView) findViewById(R.id.question_txt_answer_activity);
         answer_edit = (EditText) findViewById(R.id.answer_editText);
@@ -60,11 +56,7 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
             String answerText = answer_edit.getText().toString();
 
             currentAnswer.setAnswerText(answerText);
-//            currentAnswer.timestamp = System.currentTimeMillis() / 1000;
-//            currentAnswer.likesCount = 0;
-
             sendAnswer(currentAnswer);
-
             finish();
         }
     }

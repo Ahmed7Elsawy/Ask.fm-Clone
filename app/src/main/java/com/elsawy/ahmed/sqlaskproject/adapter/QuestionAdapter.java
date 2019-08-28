@@ -34,7 +34,6 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
     private Context mContext;
     private String userId;
 
-
     private ArrayList<Question> questionsList = new ArrayList<>();
 
     public QuestionAdapter(Context mContext) {
@@ -49,13 +48,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
         return new QuestionViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_received_question, viewGroup, false));
     }
 
-
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
 
         Question currentQuestion = QuestionAdapter.this.questionsList.get(position);
         holder.bindToQuestion(mContext, currentQuestion);
-
     }
 
     @Override
@@ -124,6 +121,3 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
     }
 
 }
-
-
-

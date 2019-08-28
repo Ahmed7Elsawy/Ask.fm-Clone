@@ -30,12 +30,19 @@ public class QuestionNotificationTab extends Fragment {
         View rootView  = inflater.inflate(R.layout.notification_question_tab, container, false);
         this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_questions);
 //        this.recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(5));
-        this.mAdapter = new QuestionAdapter(getActivity());
+//        this.mAdapter = new QuestionAdapter(getActivity());
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.recyclerView.setItemAnimator(new DefaultItemAnimator());
-        this.recyclerView.setAdapter(this.mAdapter);
+//        this.recyclerView.setAdapter(this.mAdapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.mAdapter = new QuestionAdapter(getActivity());
+        this.recyclerView.setAdapter(this.mAdapter);
     }
 
 }

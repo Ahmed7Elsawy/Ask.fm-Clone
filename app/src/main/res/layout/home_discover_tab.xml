@@ -12,14 +12,5 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Discover Tab"
-        android:textSize="30sp"
-        android:gravity="center"
-        android:id="@+id/versus_frag"
-
-        />
 
 </FrameLayout>

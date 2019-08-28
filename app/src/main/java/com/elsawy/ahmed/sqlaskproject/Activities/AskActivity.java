@@ -39,6 +39,7 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
     TextView letterCountTV;
     EditText questionEdit;
     ImageButton sendQuestionBtn;
+    ImageButton cancelQuestionBtn;
 
     Animation rightAnimation;
     Animation leftAnimation;
@@ -58,6 +59,7 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
         questionEdit = (EditText) findViewById(R.id.question_editText);
         letterCountTV = (TextView) findViewById(R.id.letter_count);
         sendQuestionBtn = (ImageButton) findViewById(R.id.send_question_action);
+        cancelQuestionBtn = (ImageButton) findViewById(R.id.cancel_question_action);
 
         rightAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_animation_right);
         leftAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_animation_left);
@@ -67,6 +69,7 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
 
         handleQuestionEditText();
         sendQuestionBtn.setOnClickListener(new SendBtnListener());
+        cancelQuestionBtn.setOnClickListener(e -> finish());
 
     }
 
@@ -177,4 +180,5 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
     }
+
 }

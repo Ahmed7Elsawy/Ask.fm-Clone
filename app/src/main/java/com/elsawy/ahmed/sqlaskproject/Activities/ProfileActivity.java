@@ -1,5 +1,6 @@
 package com.elsawy.ahmed.sqlaskproject.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,12 +78,14 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         this.profileID = intent.getStringExtra("ProfileID");
         this.profileUsername = intent.getStringExtra("ProfileUsername");
-        String stringFavorite = intent.getStringExtra("friendFavorite");
-        Log.i("fav",stringFavorite+"");
-        if(stringFavorite != null) {
-            friendFavorite = stringFavorite.equals("true");
+        boolean isFriend = intent.getBooleanExtra("isFriend",false);
+
+        if(isFriend) {
+            String stringFavorite = intent.getStringExtra("friendFavorite");
+            Log.i("fav",stringFavorite+"");    friendFavorite = stringFavorite.equals("true");
             putFriendProfileInfo(friendFavorite);
         }else {
+            putUnFriendProfileInfo();
             getProfileInfo(this.profileID);
         }
 
@@ -91,8 +94,46 @@ public class ProfileActivity extends AppCompatActivity {
 
         ask_btn.setOnClickListener(new AskBtnListener());
         favoriteImage.setOnClickListener(new FavoriteBtnListener());
+        follow_btn.setOnClickListener(e -> addFriend());
 
     }
+
+    private void addFriend() {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_FRIENDS,
+                response -> {
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        if (obj.getBoolean("error")) {
+                            Toast.makeText(ProfileActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
+                        }else {
+                            putFriendProfileInfo(false);
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    Toast.makeText(ProfileActivity.this, error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", String.valueOf(SharedPrefManager.getInstance(ProfileActivity.this).getUserId()));
+                params.put("friend_id", profileID);
+                params.put("add", "add");
+
+                return params;
+            }
+
+        };
+
+        RequestHandler.getInstance(ProfileActivity.this).addToRequestQueue(stringRequest);
+
+    }
+
 
     private class AskBtnListener implements View.OnClickListener {
         @Override
@@ -282,18 +323,15 @@ public class ProfileActivity extends AppCompatActivity {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", String.valueOf(SharedPrefManager.getInstance(ProfileActivity.this).getUserId()));
                 params.put("profile_id", profile_id);
 
                 return params;
             }
-
         };
-
         RequestHandler.getInstance(ProfileActivity.this).addToRequestQueue(stringRequest);
-
     }
 
 }
