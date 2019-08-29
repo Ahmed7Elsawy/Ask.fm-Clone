@@ -2,15 +2,18 @@ package com.elsawy.ahmed.sqlaskproject.viewholder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elsawy.ahmed.sqlaskproject.Activities.AnswerTheQuestionsActivity;
+import com.elsawy.ahmed.sqlaskproject.Activities.AskActivity;
 import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.Utils.Utilties;
@@ -22,7 +25,7 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
 
     private TextView question_txt;
     private TextView question_time;
-    private ImageView question_setting;
+    public ImageView question_setting;
     private CircleImageView profile_asker_image;
     private CardView question_cardView;
 
@@ -44,15 +47,34 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
             profile_asker_image.setImageDrawable(context.getResources().getDrawable(R.drawable.profile_image));
         }
 
-
         question_cardView.setOnClickListener(view -> {
             Intent intent = new Intent(context, AnswerTheQuestionsActivity.class);
             intent.putExtra("questionInfo",currentQuestion);
             context.startActivity(intent);
         });
 
-//        question_txt.setOnClickListener(new answerQuestionListener(currentQuestion));
+//        question_setting.setOnClickListener(view -> handlePopUP(context));
 
+
+    }
+
+    private void handlePopUP(Context context){
+        PopupMenu popup = new PopupMenu(context, question_setting);
+        popup.inflate(R.menu.question_options_menu);
+
+        popup.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.delete_menu:
+
+
+                    break;
+                case R.id.block_menu:
+                    //handle block_menu click
+                    break;
+            }
+            return false;
+        });
+        popup.show();
     }
 }
 

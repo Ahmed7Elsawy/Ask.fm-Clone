@@ -1,12 +1,15 @@
 package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.AuthFailureError;
@@ -52,7 +55,26 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
 
         Question currentQuestion = QuestionAdapter.this.questionsList.get(position);
+
         holder.bindToQuestion(mContext, currentQuestion);
+
+        holder.question_setting.setOnClickListener(view -> {
+            PopupMenu popup = new PopupMenu(mContext, holder.question_setting);
+            popup.inflate(R.menu.question_options_menu);
+
+            popup.setOnMenuItemClickListener(item -> {
+                switch (item.getItemId()) {
+                    case R.id.delete_menu:
+                        deleteQuestion(currentQuestion.getQuestionId(),position);
+                        break;
+                    case R.id.block_menu:
+                        //handle block_menu click
+                        break;
+                }
+                return false;
+            });
+            popup.show();
+        });
     }
 
     @Override
@@ -88,24 +110,13 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
                             }
                             notifyDataSetChanged();
 
-                        } else {
-                            Toast.makeText(
-                                    mContext,
-                                    obj.getString("message"),
-                                    Toast.LENGTH_LONG
-                            ).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 },
                 error -> {
-
-                    Toast.makeText(
-                            mContext,
-                            error.getMessage(),
-                            Toast.LENGTH_LONG
-                    ).show();
+                    Toast.makeText(mContext,error.getMessage(),Toast.LENGTH_LONG).show();
                 }
         ) {
             @Override
@@ -114,7 +125,38 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
                 params.put("receiver_id", userId);
                 return params;
             }
+        };
 
+        RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
+    }
+
+    private void deleteQuestion(String question_id,int position){
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_QUESTION,
+                response -> {
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        if (!obj.getBoolean("error")) {
+                            // delete the question from list
+
+                            questionsList.remove(position);
+                            notifyDataSetChanged();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    Toast.makeText(mContext,error.getMessage(),Toast.LENGTH_LONG).show();
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("question_id", question_id);
+                return params;
+            }
         };
 
         RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
