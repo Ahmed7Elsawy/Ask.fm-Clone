@@ -67,17 +67,28 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
     public void onBindViewHolder(@NonNull AnswerViewHolder holder, int position) {
         final Answer currentAnswer = AnswerAdapter.this.answersList.get(position);
 
-        View.OnClickListener openProfileClickListener = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mContext, ProfileActivity.class);
-                intent.putExtra("ProfileID", currentAnswer.getQuestion().getReceiverID());
-                intent.putExtra("ProfileUsername", currentAnswer.getUsername());
-                mContext.startActivity(intent);
+        View.OnClickListener openProfileClickListener = view -> {
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            intent.putExtra("ProfileID", currentAnswer.getQuestion().getReceiverID());
+            intent.putExtra("ProfileUsername", currentAnswer.getUsername());
+            mContext.startActivity(intent);
+        };
+
+        View.OnClickListener likeClickListener = view -> {
+            if (currentAnswer.isLike()) {
+                // remove like
+                handleLike(currentAnswer.getAnswerID(), "remove");
+                currentAnswer.setLike(false);
+                holder.handleLikeClick(false);
+            } else {
+                // add like
+                handleLike(currentAnswer.getAnswerID(), "add");
+                holder.handleLikeClick(true);
+                currentAnswer.setLike(true);
             }
         };
 
-        holder.bindToAnswer(currentAnswer,isProfile,openProfileClickListener);
+        holder.bindToAnswer(currentAnswer, isProfile, openProfileClickListener, likeClickListener);
 
     }
 
@@ -89,7 +100,8 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
     private void getAnswers() {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_SELECT_ANSWER,
+//                Constants.URL_SELECT_ANSWER,
+                Constants.URL_HANDLE_ANSWER,
                 response -> {
                     try {
                         Log.i("AnswerResponse", response);
@@ -110,29 +122,21 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
                                 currentAnswer.setTimestamp(timestamp.getTime());
                                 currentAnswer.setLikesCount(JSON_Answer.getInt("likes_count"));
                                 currentAnswer.setUsername(JSON_Answer.getString("username"));
+                                currentAnswer.setAnswerID(JSON_Answer.getString("answer_id"));
 
                                 answersList.add(currentAnswer);
                             }
                             notifyDataSetChanged();
 
                         } else {
-                            Toast.makeText(
-                                    mContext,
-                                    obj.getString("message"),
-                                    Toast.LENGTH_LONG
-                            ).show();
+                            Toast.makeText(mContext, obj.getString("message"), Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 },
                 error -> {
-
-                    Toast.makeText(
-                            mContext,
-                            error.getMessage(),
-                            Toast.LENGTH_LONG
-                    ).show();
+                    Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG).show();
                 }
         ) {
             @Override
@@ -140,6 +144,41 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", profileId);
                 params.put("tab", tab);
+
+                return params;
+            }
+
+        };
+
+        RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
+    }
+
+    private void handleLike(String answerId, String operation) {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_HANDLE_ANSWER,
+                response -> {
+                    try {
+                        JSONObject obj = new JSONObject(response);
+                        if (!obj.getBoolean("error")) {
+
+                        } else {
+                            Toast.makeText(mContext, obj.getString("message"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+                    Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("answer_id", answerId);
+                params.put("user_id", SharedPrefManager.getInstance(mContext).getUserId());
+                params.put("like", operation);
 
                 return params;
             }

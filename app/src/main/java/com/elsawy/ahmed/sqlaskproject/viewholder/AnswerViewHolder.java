@@ -44,7 +44,7 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
         itemAnswerCardView = (CardView) itemView.findViewById(R.id.item_answer_card_view);
     }
 
-    public void bindToAnswer(Answer answer,boolean isProfile, View.OnClickListener openProfileClickListener){//, View.OnClickListener likeClickListener) {
+    public void bindToAnswer(Answer answer,boolean isProfile, View.OnClickListener openProfileClickListener, View.OnClickListener likeClickListener) {
         question_text_TV.setText(answer.getQuestion().getQuestionText());
         answer_text_TV.setText(answer.getAnswerText());
         username_TV.setText(answer.getUsername());
@@ -58,5 +58,18 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
 
         user_profile_image.setOnClickListener(openProfileClickListener);
         username_TV.setOnClickListener(openProfileClickListener);
+
+        like_btn.setOnClickListener(likeClickListener);
     }
+
+    public void handleLikeClick(boolean isLike){
+        if (isLike){
+            like_btn.setImageResource(R.drawable.ic_favorite_orange_24dp);
+        }else {
+            like_btn.setImageResource(R.drawable.ic_like_black_24dp);
+        }
+
+    }
+
+
 }

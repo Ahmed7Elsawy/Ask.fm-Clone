@@ -60,10 +60,11 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
             finish();
         }
     }
+
     private void sendAnswer(Answer currentAnswer){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_INSERT_ANSWER,
+                Constants.URL_HANDLE_ANSWER,
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);

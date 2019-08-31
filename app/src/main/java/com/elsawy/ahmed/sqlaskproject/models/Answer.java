@@ -11,6 +11,7 @@ public class Answer  {
     private String answerID;
     private Long timestamp;
     private int likesCount;
+    private boolean isLike = false;
     private Question question;
     public Map<String, Boolean> likes = new HashMap<>();
 
@@ -69,6 +70,14 @@ public class Answer  {
 
     public Map<String, Boolean> getLikes() {
         return likes;
+    }
+
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
     }
 
     public void setLikes(Map<String, Boolean> likes) {

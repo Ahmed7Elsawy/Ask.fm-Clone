@@ -138,7 +138,7 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
     private void sendQuestion(Question currentQuestion){
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                Constants.URL_URL_INSERT_QUESTION,
+                Constants.URL_INSERT_QUESTION,
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
