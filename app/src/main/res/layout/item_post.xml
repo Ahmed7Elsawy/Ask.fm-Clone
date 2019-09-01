@@ -39,9 +39,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="@dimen/item_post_padding"
+            android:paddingTop="@dimen/item_post_padding"
+            android:textColor="@color/answerColor"
             android:text="@string/profile_name"
-            android:textSize="@dimen/item_post_username_time_text_size"
+            android:textSize="@dimen/item_post_username"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/answer_profile_image"
             app:layout_constraintTop_toBottomOf="@id/question_txt_answer" />
 
@@ -50,11 +52,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:padding="@dimen/item_post_padding"
             android:text="@string/time_ago"
-            android:textSize="@dimen/item_post_username_time_text_size"
-            app:layout_constraintStart_toEndOf="@id/answer_username_TV"
-            app:layout_constraintTop_toTopOf="@id/answer_username_TV" />
+            android:textColor="@color/defaultTextColor"
+            android:textSize="@dimen/item_post_time_age_text_size"
+            app:layout_constraintStart_toStartOf="@id/answer_username_TV"
+            app:layout_constraintTop_toBottomOf="@id/answer_username_TV" />
 
         <TextView
             android:id="@+id/question_answer_TV"

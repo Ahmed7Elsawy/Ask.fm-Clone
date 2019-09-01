@@ -7,6 +7,7 @@ import android.os.Parcelable;
 public class Question implements Parcelable {
 
     private String askerID;
+    private String askerUsername;
     private String ReceiverID;
     private String questionText;
     private String questionId;
@@ -51,6 +52,18 @@ public class Question implements Parcelable {
 
     public String getAskerID() {
         return askerID;
+    }
+
+    public String getAskerUsername() {
+        return askerUsername;
+    }
+
+    public void setAskerUsername(String askerUsername) {
+        this.askerUsername = askerUsername;
+    }
+
+    public boolean isAnonymous() {
+        return isAnonymous;
     }
 
     public void setAskerID(String askerID) {

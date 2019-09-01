@@ -2,6 +2,13 @@ package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,10 +75,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         final Answer currentAnswer = AnswerAdapter.this.answersList.get(position);
 
         View.OnClickListener openProfileClickListener = view -> {
-            Intent intent = new Intent(mContext, ProfileActivity.class);
-            intent.putExtra("ProfileID", currentAnswer.getQuestion().getReceiverID());
-            intent.putExtra("ProfileUsername", currentAnswer.getUsername());
-            mContext.startActivity(intent);
+            openOtherProfileActivity(currentAnswer.getQuestion().getReceiverID(), currentAnswer.getUsername());
         };
 
         View.OnClickListener likeClickListener = view -> {
@@ -80,18 +84,54 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
                 handleLike(currentAnswer.getAnswerID(), "remove");
                 currentAnswer.setLike(false);
                 holder.handleLikeImage(false);
-                holder.handleLikesCount(currentAnswer.getLikesCount() - 1);
+                currentAnswer.setLikesCount(currentAnswer.getLikesCount() - 1);
+                holder.handleLikesCount(currentAnswer.getLikesCount());
             } else {
                 // add like
                 handleLike(currentAnswer.getAnswerID(), "add");
                 holder.handleLikeImage(true);
                 currentAnswer.setLike(true);
-                holder.handleLikesCount(currentAnswer.getLikesCount() + 1);
+                currentAnswer.setLikesCount(currentAnswer.getLikesCount() + 1);
+                holder.handleLikesCount(currentAnswer.getLikesCount());
 
             }
         };
 
-        holder.bindToAnswer(currentAnswer, isProfile, openProfileClickListener, likeClickListener);
+        String questionAndUsername;
+        int questionLength;
+        int usernameLength;
+
+        if (currentAnswer.getQuestion().isAnonymous()) {
+            questionAndUsername = currentAnswer.getQuestion().getQuestionText() + "  " + currentAnswer.getQuestion().getAskerUsername();
+            questionLength = currentAnswer.getQuestion().getQuestionText().length() + 1;
+            usernameLength = currentAnswer.getQuestion().getAskerUsername().length() + 1;
+        } else {
+            questionAndUsername = currentAnswer.getQuestion().getQuestionText();
+            questionLength = currentAnswer.getQuestion().getQuestionText().length();
+            usernameLength = 0;
+        }
+
+
+        SpannableString ss = new SpannableString(questionAndUsername);
+
+        ClickableSpan askerUsernameClickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                openOtherProfileActivity(currentAnswer.getQuestion().getAskerID(), currentAnswer.getQuestion().getAskerUsername());
+            }
+
+            @Override
+            public void updateDrawState(TextPaint usernameText) {
+                super.updateDrawState(usernameText);
+                usernameText.setColor(mContext.getResources().getColor(R.color.defaultTextColor));
+                usernameText.setTypeface(Typeface.create("Arial", Typeface.NORMAL));
+                usernameText.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(askerUsernameClickableSpan, questionLength, questionLength + usernameLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+
+        holder.bindToAnswer(currentAnswer, isProfile, openProfileClickListener, likeClickListener, ss);
 
     }
 
@@ -118,14 +158,17 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
 
                                 Answer currentAnswer = new Answer();
 
-                                currentAnswer.setAnswerText(JSON_Answer.getString("answer_text"));
+                                currentAnswer.getQuestion().setAskerUsername(JSON_Answer.getString("askerUsername"));
+                                currentAnswer.setUsername(JSON_Answer.getString("username"));
+                                currentAnswer.setAnswerID(JSON_Answer.getString("answer_id"));
                                 currentAnswer.getQuestion().setQuestionText(JSON_Answer.getString("question_text"));
-                                currentAnswer.getQuestion().setReceiverID(JSON_Answer.getString("receiver_id"));
+                                currentAnswer.setAnswerText(JSON_Answer.getString("answer_text"));
                                 Timestamp timestamp = Timestamp.valueOf(JSON_Answer.getString("answer_time"));
                                 currentAnswer.setTimestamp(timestamp.getTime());
                                 currentAnswer.setLikesCount(JSON_Answer.getInt("likes_count"));
-                                currentAnswer.setUsername(JSON_Answer.getString("username"));
-                                currentAnswer.setAnswerID(JSON_Answer.getString("answer_id"));
+                                currentAnswer.getQuestion().setAnonymous(JSON_Answer.getBoolean("anonymous"));
+                                currentAnswer.getQuestion().setAskerID(JSON_Answer.getString("asker_id"));
+                                currentAnswer.getQuestion().setReceiverID(JSON_Answer.getString("receiver_id"));
                                 currentAnswer.setLike(JSON_Answer.getBoolean("islike"));
 
                                 answersList.add(currentAnswer);
@@ -190,6 +233,13 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         };
 
         RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
+    }
+
+    private void openOtherProfileActivity(String profileId, String profileUsername) {
+        Intent intent = new Intent(mContext, ProfileActivity.class);
+        intent.putExtra("ProfileID", profileId);
+        intent.putExtra("ProfileUsername", profileUsername);
+        mContext.startActivity(intent);
     }
 
 }

@@ -1,6 +1,8 @@
 package com.elsawy.ahmed.sqlaskproject.viewholder;
 
 
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -44,8 +46,11 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
         itemAnswerCardView = (CardView) itemView.findViewById(R.id.item_answer_card_view);
     }
 
-    public void bindToAnswer(Answer answer,boolean isProfile, View.OnClickListener openProfileClickListener, View.OnClickListener likeClickListener) {
-        question_text_TV.setText(answer.getQuestion().getQuestionText());
+    public void bindToAnswer(Answer answer, boolean isProfile, View.OnClickListener openProfileClickListener, View.OnClickListener likeClickListener, SpannableString ss) {
+//        question_text_TV.setText(answer.getQuestion().getQuestionText());
+        question_text_TV.setText(ss);
+        question_text_TV.setMovementMethod(LinkMovementMethod.getInstance());
+
         answer_text_TV.setText(answer.getAnswerText());
         username_TV.setText(answer.getUsername());
         answer_time_TV.setText(Utilties.getTimeAgo(answer.getTimestamp()));
