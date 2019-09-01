@@ -79,12 +79,15 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
                 // remove like
                 handleLike(currentAnswer.getAnswerID(), "remove");
                 currentAnswer.setLike(false);
-                holder.handleLikeClick(false);
+                holder.handleLikeImage(false);
+                holder.handleLikesCount(currentAnswer.getLikesCount() - 1);
             } else {
                 // add like
                 handleLike(currentAnswer.getAnswerID(), "add");
-                holder.handleLikeClick(true);
+                holder.handleLikeImage(true);
                 currentAnswer.setLike(true);
+                holder.handleLikesCount(currentAnswer.getLikesCount() + 1);
+
             }
         };
 
@@ -123,6 +126,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
                                 currentAnswer.setLikesCount(JSON_Answer.getInt("likes_count"));
                                 currentAnswer.setUsername(JSON_Answer.getString("username"));
                                 currentAnswer.setAnswerID(JSON_Answer.getString("answer_id"));
+                                currentAnswer.setLike(JSON_Answer.getBoolean("islike"));
 
                                 answersList.add(currentAnswer);
                             }

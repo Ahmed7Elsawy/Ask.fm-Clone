@@ -49,7 +49,9 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
         answer_text_TV.setText(answer.getAnswerText());
         username_TV.setText(answer.getUsername());
         answer_time_TV.setText(Utilties.getTimeAgo(answer.getTimestamp()));
-        answer_likes_count_TV.setText(String.valueOf(answer.getLikesCount()));
+
+        handleLikesCount(answer.getLikesCount());
+        handleLikeImage(answer.isLike());
 
         if (isProfile) {
             user_profile_image.setVisibility(View.GONE);
@@ -62,13 +64,17 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
         like_btn.setOnClickListener(likeClickListener);
     }
 
-    public void handleLikeClick(boolean isLike){
+    public void handleLikeImage(boolean isLike){
         if (isLike){
             like_btn.setImageResource(R.drawable.ic_favorite_orange_24dp);
         }else {
             like_btn.setImageResource(R.drawable.ic_like_black_24dp);
         }
 
+    }
+
+    public void handleLikesCount(int likesCount){
+        answer_likes_count_TV.setText(String.valueOf(likesCount));
     }
 
 
