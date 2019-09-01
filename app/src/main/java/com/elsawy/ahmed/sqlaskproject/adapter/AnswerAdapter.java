@@ -111,9 +111,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
             usernameLength = 0;
         }
 
-
-        SpannableString ss = new SpannableString(questionAndUsername);
-
+        SpannableString spannableString = new SpannableString(questionAndUsername);
         ClickableSpan askerUsernameClickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View widget) {
@@ -128,10 +126,10 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
                 usernameText.setUnderlineText(false);
             }
         };
-        ss.setSpan(askerUsernameClickableSpan, questionLength, questionLength + usernameLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(askerUsernameClickableSpan, questionLength, questionLength + usernameLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 
-        holder.bindToAnswer(currentAnswer, isProfile, openProfileClickListener, likeClickListener, ss);
+        holder.bindToAnswer(currentAnswer, isProfile, openProfileClickListener, likeClickListener, spannableString);
 
     }
 
