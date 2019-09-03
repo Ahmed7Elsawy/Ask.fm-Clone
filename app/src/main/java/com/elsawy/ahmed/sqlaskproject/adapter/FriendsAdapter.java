@@ -1,6 +1,7 @@
 package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.RequestHandler;
 import com.elsawy.ahmed.sqlaskproject.SharedPrefManager;
@@ -55,13 +57,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
     public void onBindViewHolder(@NonNull FriendViewHolder holder, final int position) {
 
         final Friend currentFriend = FriendsAdapter.this.friendsList.get(position);
-        View.OnClickListener favoriteClickListener = view -> {
-            if (currentFriend.getFavorite()) {
-                currentFriend.setFavorite(false);
-            } else {
-                currentFriend.setFavorite(true);
-            }
-        };
+
 
         View.OnClickListener deleteFriendClickListener = view -> {
             deleteFriend(this.mContext,currentFriend.getUserID());
@@ -69,7 +65,26 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
             notifyDataSetChanged();
         };
 
-        holder.bindToFriend(this.mContext, currentFriend, favoriteClickListener,deleteFriendClickListener);
+        View.OnClickListener openUserProfile = view ->{
+            Intent intent = new Intent(mContext, ProfileActivity.class);
+            intent.putExtra("ProfileID", currentFriend.getUserID());
+            intent.putExtra("ProfileUsername", currentFriend.getUsername());
+            intent.putExtra("isFriend", "true");
+            intent.putExtra("friendFavorite", String.valueOf(currentFriend.getFavorite()));
+            mContext.startActivity(intent);
+        };
+
+        View.OnClickListener favoriteClickListener = view ->{
+            if (currentFriend.getFavorite()) {
+                currentFriend.setFavorite(false);
+            } else {
+                currentFriend.setFavorite(true);
+            }
+            updateFavorite(mContext,currentFriend.getUserID(),currentFriend.getFavorite());
+            holder.setFavoriteImage(currentFriend.getFavorite());
+        };
+
+        holder.bindToFriend(currentFriend, favoriteClickListener,deleteFriendClickListener,openUserProfile);
 
     }
 
@@ -98,6 +113,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                                 currentFriend.setUserID(JSON_friend.getString("friend_id"));
                                 currentFriend.setUsername(JSON_friend.getString("name"));
                                 currentFriend.setFavorite(JSON_friend.getBoolean("favorite"));
+                                currentFriend.setFriend(true);
 
                                 friendsList.add(currentFriend);
                             }
@@ -161,5 +177,40 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
     }
 
+    private void updateFavorite(Context context,String friend_id, boolean favorite) {
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.POST,
+                Constants.URL_FRIENDS,
+                response -> {
+                    try {
+                        JSONObject obj = new JSONObject(response);
+
+                        if (obj.getBoolean("error")) {
+                            Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> {
+
+                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                }
+        ) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("user_id", String.valueOf(SharedPrefManager.getInstance(context).getUserId()));
+                params.put("friend_id", friend_id);
+                params.put("favorite", String.valueOf(favorite));
+
+                return params;
+            }
+
+        };
+
+        RequestHandler.getInstance(context).addToRequestQueue(stringRequest);
+
+    }
 
 }

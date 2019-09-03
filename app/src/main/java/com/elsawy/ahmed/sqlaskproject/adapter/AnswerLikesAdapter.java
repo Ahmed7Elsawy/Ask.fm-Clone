@@ -59,14 +59,12 @@ public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
             addFriend(this.mContext, currentUser.getUserID());
             currentUser.setFriend(true);
             holder.showAsUser(currentUser.isFriend());
-            notifyDataSetChanged();
         };
 
         View.OnClickListener deleteFriendClickListener = view -> {
             deleteFriend(this.mContext,currentUser.getUserID());
             currentUser.setFriend(false);
             holder.showAsUser(currentUser.isFriend());
-            notifyDataSetChanged();
         };
 
         holder.bindToUser(this.mContext, currentUser, addFriendClickListener,deleteFriendClickListener);
