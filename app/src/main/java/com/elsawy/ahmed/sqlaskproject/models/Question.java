@@ -14,7 +14,8 @@ public class Question implements Parcelable {
     private boolean isAnonymous;
     private Long questionTimestamp;
 
-    public Question(){}
+    public Question() {
+    }
 
     public Question(String askerID, String ReceiverID, String questionText, boolean isAnonymous, Long questionTimestamp, String questionId) {
         this.askerID = askerID;
@@ -25,8 +26,10 @@ public class Question implements Parcelable {
         this.questionId = questionId;
     }
 
+
     protected Question(Parcel in) {
         askerID = in.readString();
+        askerUsername = in.readString();
         ReceiverID = in.readString();
         questionText = in.readString();
         questionId = in.readString();
@@ -35,6 +38,22 @@ public class Question implements Parcelable {
             questionTimestamp = null;
         } else {
             questionTimestamp = in.readLong();
+        }
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(askerID);
+        dest.writeString(askerUsername);
+        dest.writeString(ReceiverID);
+        dest.writeString(questionText);
+        dest.writeString(questionId);
+        dest.writeByte((byte) (isAnonymous ? 1 : 0));
+        if (questionTimestamp == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeLong(questionTimestamp);
         }
     }
 
@@ -115,18 +134,5 @@ public class Question implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(askerID);
-        parcel.writeString(ReceiverID);
-        parcel.writeString(questionText);
-        parcel.writeString(questionId);
-        parcel.writeByte((byte) (isAnonymous ? 1 : 0));
-        if (questionTimestamp == null) {
-            parcel.writeByte((byte) 0);
-        } else {
-            parcel.writeByte((byte) 1);
-            parcel.writeLong(questionTimestamp);
-        }
-    }
+
 }

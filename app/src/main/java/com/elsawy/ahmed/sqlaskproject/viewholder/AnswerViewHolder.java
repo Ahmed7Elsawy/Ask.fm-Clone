@@ -46,11 +46,10 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
         itemAnswerCardView = (CardView) itemView.findViewById(R.id.item_answer_card_view);
     }
 
-    public void bindToAnswer(Answer answer, boolean isProfile, View.OnClickListener openProfileClickListener, View.OnClickListener likeClickListener, SpannableString ss) {
+    public void bindToAnswer(Answer answer, boolean isProfile, View.OnClickListener openProfileClickListener, View.OnClickListener likeClickListener,View.OnClickListener openAnswerDetailClickListener, SpannableString ss) {
 //        question_text_TV.setText(answer.getQuestion().getQuestionText());
         question_text_TV.setText(ss);
         question_text_TV.setMovementMethod(LinkMovementMethod.getInstance());
-
         answer_text_TV.setText(answer.getAnswerText());
         username_TV.setText(answer.getUsername());
         answer_time_TV.setText(Utilties.getTimeAgo(answer.getTimestamp()));
@@ -65,8 +64,10 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
 
         user_profile_image.setOnClickListener(openProfileClickListener);
         username_TV.setOnClickListener(openProfileClickListener);
-
         like_btn.setOnClickListener(likeClickListener);
+        question_text_TV.setOnClickListener(openAnswerDetailClickListener);
+        answer_text_TV.setOnClickListener(openAnswerDetailClickListener);
+        answer_time_TV.setOnClickListener(openAnswerDetailClickListener);
     }
 
     public void handleLikeImage(boolean isLike){

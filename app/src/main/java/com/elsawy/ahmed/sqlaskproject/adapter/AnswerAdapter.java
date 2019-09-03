@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.elsawy.ahmed.sqlaskproject.Activities.AnswerDetailActivity;
 import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.RequestHandler;
@@ -78,6 +79,12 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
             openOtherProfileActivity(currentAnswer.getQuestion().getReceiverID(), currentAnswer.getUsername());
         };
 
+        View.OnClickListener openAnswerDetailClickListener = view -> {
+            Intent answerDetailIntent = new Intent(mContext, AnswerDetailActivity.class);
+            answerDetailIntent.putExtra("theAnswer", currentAnswer);
+            mContext.startActivity(answerDetailIntent);
+        };
+
         View.OnClickListener likeClickListener = view -> {
             if (currentAnswer.isLike()) {
                 // remove like
@@ -100,7 +107,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         String questionAndUsername;
         int questionLength;
         int usernameLength;
-
         if (currentAnswer.getQuestion().isAnonymous()) {
             questionAndUsername = currentAnswer.getQuestion().getQuestionText() + "  " + currentAnswer.getQuestion().getAskerUsername();
             questionLength = currentAnswer.getQuestion().getQuestionText().length() + 1;
@@ -110,7 +116,6 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
             questionLength = currentAnswer.getQuestion().getQuestionText().length();
             usernameLength = 0;
         }
-
         SpannableString spannableString = new SpannableString(questionAndUsername);
         ClickableSpan askerUsernameClickableSpan = new ClickableSpan() {
             @Override
@@ -129,7 +134,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         spannableString.setSpan(askerUsernameClickableSpan, questionLength, questionLength + usernameLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
 
-        holder.bindToAnswer(currentAnswer, isProfile, openProfileClickListener, likeClickListener, spannableString);
+        holder.bindToAnswer(currentAnswer, isProfile, openProfileClickListener, likeClickListener,openAnswerDetailClickListener, spannableString);
 
     }
 

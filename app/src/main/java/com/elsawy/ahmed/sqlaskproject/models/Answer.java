@@ -1,9 +1,12 @@
 package com.elsawy.ahmed.sqlaskproject.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class Answer  {
+public class Answer implements Parcelable {
 
 //    public String uid;
     private String username;
@@ -23,6 +26,32 @@ public class Answer  {
     public Answer(Question question) {
         this.question =question;
     }
+
+    protected Answer(Parcel in) {
+        username = in.readString();
+        answerText = in.readString();
+        answerID = in.readString();
+        if (in.readByte() == 0) {
+            timestamp = null;
+        } else {
+            timestamp = in.readLong();
+        }
+        likesCount = in.readInt();
+        isLike = in.readByte() != 0;
+        question = in.readParcelable(Question.class.getClassLoader());
+    }
+
+    public static final Creator<Answer> CREATOR = new Creator<Answer>() {
+        @Override
+        public Answer createFromParcel(Parcel in) {
+            return new Answer(in);
+        }
+
+        @Override
+        public Answer[] newArray(int size) {
+            return new Answer[size];
+        }
+    };
 
     public String getAnswerText() {
         return answerText;
@@ -96,5 +125,26 @@ public class Answer  {
         result.put("likes", likes);
 
         return result;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(username);
+        parcel.writeString(answerText);
+        parcel.writeString(answerID);
+        if (timestamp == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeLong(timestamp);
+        }
+        parcel.writeInt(likesCount);
+        parcel.writeByte((byte) (isLike ? 1 : 0));
+        parcel.writeParcelable(question, i);
     }
 }

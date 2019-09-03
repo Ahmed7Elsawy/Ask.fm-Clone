@@ -32,8 +32,8 @@ public class WallTab extends Fragment {
         mRecycler.setItemAnimator(new DefaultItemAnimator());
         mRecycler.setLayoutManager(new LinearLayoutManager(WallTab.this.getContext()));
 
-        AnswerAdapter adapter = new AnswerAdapter(WallTab.this.getContext(),"WallTab");
-        mRecycler.setAdapter(adapter);
+        AnswerAdapter answerAdapter = new AnswerAdapter(WallTab.this.getContext(),"WallTab");
+        mRecycler.setAdapter(answerAdapter);
 
         return rootView;
     }
