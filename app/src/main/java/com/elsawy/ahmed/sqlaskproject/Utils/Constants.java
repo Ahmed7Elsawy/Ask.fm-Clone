@@ -10,6 +10,7 @@ public class Constants {
     public static final String URL_FRIENDS = ROOT_URL + "getFriends.php";
     public static final String URL_INSERT_QUESTION = ROOT_URL + "InsertQuestion.php";
     public static final String URL_HANDLE_ANSWER = ROOT_URL + "handleAnswer.php";
-    public static final String URL_SELECT_ANSWER = ROOT_URL + "SelectAnswer.php";
+    public static final String URL_HANDLE_IMAGES = ROOT_URL + "handleImages.php";
+
 
 }
