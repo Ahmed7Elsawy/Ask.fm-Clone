@@ -113,12 +113,10 @@ public class MainActivity extends AppCompatActivity
                     setFragment(notificationFragment);
                     return true;
                 case R.id.navigation_friends:
-//                    textView2.setText("title_friends");
                     showActionBar();
                     setFragment(friendsFragment);
                     return true;
                 case R.id.navigation_profile:
-//                    textView2.setText("title_profile");
                     hideActionBar();
                     setFragment(profileFragment);
                     return true;
