@@ -11,6 +11,8 @@ public class Constants {
     public static final String URL_INSERT_QUESTION = ROOT_URL + "InsertQuestion.php";
     public static final String URL_HANDLE_ANSWER = ROOT_URL + "handleAnswer.php";
     public static final String URL_HANDLE_IMAGES = ROOT_URL + "handleImages.php";
-
+    public static final String URL_HANDLE_ANSWER_NOTIFICATION = ROOT_URL + "handleAnswerNotification.php";
+    public static final String URL_HANDLE_LIKES_NOTIFICATION = ROOT_URL + "handleLikesNotification.php";
+    public static final String URL_HANDLE_FAVORITE_NOTIFICATION = ROOT_URL + "handleFavoriteNotification.php";
 
 }

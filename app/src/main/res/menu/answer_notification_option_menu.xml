@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/delete_question_menu"
+        android:id="@+id/delete_answer_menu"
         android:title="@string/delete" />
-
-    <item
-        android:id="@+id/block_menu"
-        android:title="@string/block" />
 
 </menu>

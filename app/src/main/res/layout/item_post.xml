@@ -54,7 +54,7 @@
             android:background="@color/white"
             android:text="@string/time_ago"
             android:textColor="@color/defaultTextColor"
-            android:textSize="@dimen/item_post_time_age_text_size"
+            android:textSize="@dimen/item_post_time_ago_text_size"
             app:layout_constraintStart_toStartOf="@id/answer_username_TV"
             app:layout_constraintTop_toBottomOf="@id/answer_username_TV" />
 

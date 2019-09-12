@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/answer_notification_card_view"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/answer_notification_profile_image"
+            android:layout_width="@dimen/user_image_height_width"
+            android:layout_height="@dimen/user_image_height_width"
+            android:src="@drawable/ic_person_black_24dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/answer_notification_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:minLines="1"
+            android:padding="@dimen/item_answer_notification_padding"
+            android:text="@string/post_answer"
+            android:textColor="@color/answerColor"
+            android:textSize="@dimen/item_answer_notification_text_view_text_size"
+            android:textStyle="normal"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/answer_notification_time_TV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:text="@string/time_ago"
+            android:textColor="@color/defaultTextColor"
+            android:textSize="@dimen/item_answer_notification_time_ago_text_size"
+            android:paddingStart="@dimen/item_answer_notification_padding"
+            android:paddingEnd="@dimen/item_answer_notification_padding"
+            android:paddingBottom="@dimen/item_answer_notification_padding"
+            app:layout_constraintStart_toStartOf="@id/answer_notification_TV"
+            app:layout_constraintTop_toBottomOf="@id/answer_notification_TV" />
+
+        <ImageView
+            android:id="@+id/answer_notification_setting_image"
+            android:layout_width="@dimen/item_receive_question_setting_image_width"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_three_dots_black_24dp"
+            android:scaleType="fitXY"
+            android:paddingStart="@dimen/item_answer_notification_padding"
+            android:paddingEnd="@dimen/item_answer_notification_padding"
+            android:paddingBottom="@dimen/item_answer_notification_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/answer_notification_TV" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

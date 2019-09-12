@@ -3,8 +3,12 @@ package com.elsawy.ahmed.sqlaskproject.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +33,8 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
 
     private TextView questionTV;
     private EditText answer_edit;
-    private ImageView sendAnswerImage;
+    private ImageButton sendAnswerImage;
+    private ImageView cancelAnswerBtn;
 
     private Answer currentAnswer;
 
@@ -43,11 +48,14 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
 
         questionTV = (TextView) findViewById(R.id.question_txt_answer_activity);
         answer_edit = (EditText) findViewById(R.id.answer_editText);
-        sendAnswerImage = (ImageView) findViewById(R.id.send_answer_action);
+        sendAnswerImage = (ImageButton) findViewById(R.id.answer_layout_send_action);
+        cancelAnswerBtn = (ImageView) findViewById(R.id.answer_layout_cancel_action);
 
+        cancelAnswerBtn.setOnClickListener(e -> finish());
         questionTV.setText(currentAnswer.getQuestion().getQuestionText());
         sendAnswerImage.setOnClickListener(new SendAnswerListener());
 
+        handleAnswerEditText();
     }
 
     private class SendAnswerListener implements View.OnClickListener {
@@ -68,6 +76,8 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
+                        Log.i("answerQuestion",response);
+
                         if(!obj.getBoolean("error")){
 
 //                            openMainActivity();
@@ -107,5 +117,33 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
 
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
 
+    }
+
+    private void handleAnswerEditText() {
+        answer_edit.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before,
+                                      int count) {
+
+                if(count == 0)
+                {
+                    sendAnswerImage.setClickable(false);
+                    sendAnswerImage.setImageResource(R.drawable.ic_send_black_24dp);
+                }
+                else {
+                    sendAnswerImage.setClickable(true);
+                    sendAnswerImage.setImageResource(R.drawable.ic_send_white_24dp);
+
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
     }
 }

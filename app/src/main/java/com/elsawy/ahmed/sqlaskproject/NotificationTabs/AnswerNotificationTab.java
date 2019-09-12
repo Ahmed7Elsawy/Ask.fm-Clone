@@ -7,10 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.elsawy.ahmed.sqlaskproject.R;
+import com.elsawy.ahmed.sqlaskproject.Utils.VerticalSpaceItemDecoration;
+import com.elsawy.ahmed.sqlaskproject.adapter.AnswerNotificationAdapter;
 
 public class AnswerNotificationTab extends Fragment {
+
+    private RecyclerView answerNotificationRecyclerView;
+    private AnswerNotificationAdapter answerNotificationAdapter;
 
     public AnswerNotificationTab() {
         // Required empty public constructor
@@ -19,8 +27,24 @@ public class AnswerNotificationTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.notification_answer_tab, container, false);
+
+        View rootView = inflater.inflate(R.layout.notification_answer_tab, container, false);
+
+        this.answerNotificationRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_answers_notification);
+        this.answerNotificationRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(5));
+        this.answerNotificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.answerNotificationRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        this.answerNotificationRecyclerView.setAdapter(this.mAdapter);
+
+        return rootView;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        this.answerNotificationAdapter = new AnswerNotificationAdapter(getActivity(), "answersNotification");
+        this.answerNotificationRecyclerView.setAdapter(this.answerNotificationAdapter);
+    }
+
 
 }

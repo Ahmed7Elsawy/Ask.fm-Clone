@@ -143,6 +143,8 @@ public class ProfileActivity extends AppCompatActivity {
             question.setReceiverID(profileID);
             Intent intent=new Intent(ProfileActivity.this, AskActivity.class);
             intent.putExtra("questionInfo",question);
+            intent.putExtra("username",profileUsername);
+
             ProfileActivity.this.startActivity(intent);
 
         }

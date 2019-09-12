@@ -33,18 +33,19 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AskActivity extends AppCompatActivity implements View.OnClickListener {
 
-    CircleImageView anonymousBtn;
-    RelativeLayout anonymousLayout;
-    TextView anonymousTV;
-    TextView letterCountTV;
-    EditText questionEdit;
-    ImageButton sendQuestionBtn;
-    ImageButton cancelQuestionBtn;
+    private TextView usernameTV;
+    private CircleImageView anonymousBtn;
+    private RelativeLayout anonymousLayout;
+    private TextView anonymousTV;
+    private TextView letterCountTV;
+    private EditText questionEdit;
+    private ImageButton sendQuestionBtn;
+    private ImageButton cancelQuestionBtn;
 
-    Animation rightAnimation;
-    Animation leftAnimation;
-    boolean hideUser = false;
-    Question currentQuestion;
+    private Animation rightAnimation;
+    private Animation leftAnimation;
+    private boolean hideUser = false;
+    private Question currentQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,7 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_ask);
 
         this.currentQuestion = (Question) getIntent().getParcelableExtra("questionInfo");
+        String username = getIntent().getStringExtra("username");
 
         anonymousBtn = (CircleImageView) findViewById(R.id.anonymous_user_btn);
         anonymousLayout = (RelativeLayout) findViewById(R.id.anonymous_user_layout);
@@ -60,6 +62,9 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
         letterCountTV = (TextView) findViewById(R.id.letter_count);
         sendQuestionBtn = (ImageButton) findViewById(R.id.send_question_action);
         cancelQuestionBtn = (ImageButton) findViewById(R.id.cancel_question_action);
+        usernameTV = (TextView) findViewById(R.id.ask_activity_username);
+
+        usernameTV.setText(username);
 
         rightAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_animation_right);
         leftAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.button_animation_left);
@@ -101,7 +106,7 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
                 int remainLetterCount = maxLetterCount - count;
                 letterCountTV.setText(Integer.toString(remainLetterCount));
 
-                if(remainLetterCount == maxLetterCount)
+                if(count == 0)
                 {
                     sendQuestionBtn.setClickable(false);
                     sendQuestionBtn.setImageResource(R.drawable.ic_send_black_24dp);

@@ -25,7 +25,7 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
 
     private TextView question_txt;
     private TextView question_time;
-    public ImageView question_setting;
+    private ImageView question_setting;
     private CircleImageView profile_asker_image;
     private CardView question_cardView;
 
@@ -39,7 +39,7 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
         question_cardView = (CardView)itemView.findViewById(R.id.question_card_view);
     }
 
-    public void bindToQuestion(Context context,Question currentQuestion){//, View.OnClickListener answerQuestionListener) {
+    public void bindToQuestion(Context context,Question currentQuestion, View.OnClickListener cardViewClickListener, PopupMenu.OnMenuItemClickListener settingMenuItemClickListener){
 
         question_txt.setText(currentQuestion.getQuestionText());
         question_time.setText(Utilties.getTimeAgo(currentQuestion.getQuestionTimestamp()));
@@ -47,34 +47,16 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
             profile_asker_image.setImageDrawable(context.getResources().getDrawable(R.drawable.profile_image));
         }
 
-        question_cardView.setOnClickListener(view -> {
-            Intent intent = new Intent(context, AnswerTheQuestionsActivity.class);
-            intent.putExtra("questionInfo",currentQuestion);
-            context.startActivity(intent);
+        question_cardView.setOnClickListener(cardViewClickListener);
+
+        question_setting.setOnClickListener(view -> {
+            PopupMenu popup = new PopupMenu(context, question_setting);
+            popup.inflate(R.menu.question_options_menu);
+            popup.setOnMenuItemClickListener(settingMenuItemClickListener);
+            popup.show();
         });
-
-//        question_setting.setOnClickListener(view -> handlePopUP(context));
-
 
     }
 
-    private void handlePopUP(Context context){
-        PopupMenu popup = new PopupMenu(context, question_setting);
-        popup.inflate(R.menu.question_options_menu);
-
-        popup.setOnMenuItemClickListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.delete_menu:
-
-
-                    break;
-                case R.id.block_menu:
-                    //handle block_menu click
-                    break;
-            }
-            return false;
-        });
-        popup.show();
-    }
 }
 

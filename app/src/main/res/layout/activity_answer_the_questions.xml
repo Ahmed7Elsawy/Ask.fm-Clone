@@ -16,7 +16,7 @@
         >
 
         <ImageView
-            android:id="@+id/cancel_answer_action"
+            android:id="@+id/answer_layout_cancel_action"
             android:layout_width="@dimen/ask_and_answer_activity_cancel_width_height"
             android:layout_height="@dimen/ask_and_answer_activity_cancel_width_height"
             android:src="@drawable/ic_clear_white_24dp"
@@ -37,15 +37,18 @@
             android:textColor="@color/white"
             />
 
-        <ImageView
-            android:id="@+id/send_answer_action"
+        <ImageButton
+            android:id="@+id/answer_layout_send_action"
             android:layout_width="@dimen/ask_and_answer_activity_send_width_height"
             android:layout_height="@dimen/ask_and_answer_activity_send_width_height"
+            android:src="@drawable/ic_send_black_24dp"
             android:layout_marginStart="@dimen/ask_and_answer_activity_send_margin_start"
             android:layout_marginEnd="@dimen/ask_and_answer_activity_send_margin_end"
-            android:src="@drawable/ic_send_white_24dp"
             android:layout_gravity="center"
+            android:clickable="false"
+            android:background="@color/colorPrimary"
             />
+
     </LinearLayout>
 
     <EditText

@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     tools:context=".NotificationTabs.LikesNotificationTab">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_likes_notification"
+        android:scrollbars="vertical"
+        android:clipToPadding="false"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Likes notification fragment"
-        android:textSize="30sp"
-        android:gravity="center"
-        />
+        android:layout_height="match_parent" />
+
 </FrameLayout>

@@ -1,8 +1,10 @@
 package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.elsawy.ahmed.sqlaskproject.Activities.AnswerTheQuestionsActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.RequestHandler;
 import com.elsawy.ahmed.sqlaskproject.SharedPrefManager;
@@ -56,25 +59,27 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
 
         Question currentQuestion = QuestionAdapter.this.questionsList.get(position);
 
-        holder.bindToQuestion(mContext, currentQuestion);
+        PopupMenu.OnMenuItemClickListener settingMenuItemClickListener = item -> {
+            switch (item.getItemId()) {
+                case R.id.delete_question_menu:
+                    deleteQuestion(currentQuestion.getQuestionId(), position);
+                    Log.i("callDeleteQuestion",questionsList.size()+"");
+                    break;
+                case R.id.block_menu:
+                    //handle block_menu click
+                    break;
+            }
+            return false;
+        };
 
-        holder.question_setting.setOnClickListener(view -> {
-            PopupMenu popup = new PopupMenu(mContext, holder.question_setting);
-            popup.inflate(R.menu.question_options_menu);
+        View.OnClickListener cardViewClickListener = view -> {
+            Intent intent = new Intent(mContext, AnswerTheQuestionsActivity.class);
+            intent.putExtra("questionInfo",currentQuestion);
+            mContext.startActivity(intent);
+        };
 
-            popup.setOnMenuItemClickListener(item -> {
-                switch (item.getItemId()) {
-                    case R.id.delete_menu:
-                        deleteQuestion(currentQuestion.getQuestionId(),position);
-                        break;
-                    case R.id.block_menu:
-                        //handle block_menu click
-                        break;
-                }
-                return false;
-            });
-            popup.show();
-        });
+        holder.bindToQuestion(mContext, currentQuestion, cardViewClickListener, settingMenuItemClickListener);
+
     }
 
     @Override
@@ -140,7 +145,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
                         if (!obj.getBoolean("error")) {
                             // delete the question from list
 
+                            Log.i("beforeDeleteQuestion",questionsList.size()+"");
                             questionsList.remove(position);
+                            Log.i("afterDeleteQuestion",questionsList.size()+"");
                             notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
