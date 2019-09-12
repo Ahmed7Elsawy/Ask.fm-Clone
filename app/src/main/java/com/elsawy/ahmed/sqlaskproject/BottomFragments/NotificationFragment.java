@@ -21,9 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NotificationFragment extends Fragment {
-    ViewPager viewPager;
-    ViewPagerAdapter adapter;
-    TabLayout tabLayout;
+
+    private ViewPager notificationViewPager;
+    private ViewPagerAdapter notificationPagerAdapter;
+    private TabLayout notificationTabLayout;
+
     private int[] tabIcons = {
             R.drawable.ic_question_mark_black_24dp,
             R.drawable.ic_answer_black_24dp,
@@ -42,30 +44,34 @@ public class NotificationFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.bottom_notification, container, false);
 
-        this.viewPager = (ViewPager) rootView.findViewById(R.id.viewpager_notification);
-        setupViewPager(this.viewPager);
-        tabLayout = (TabLayout) rootView.findViewById(R.id.notification_tabs);
-        tabLayout.setupWithViewPager(this.viewPager);
+        this.notificationViewPager = (ViewPager) rootView.findViewById(R.id.viewpager_notification);
+        setupViewPager(this.notificationViewPager);
+        notificationTabLayout = (TabLayout) rootView.findViewById(R.id.notification_tabs);
+        notificationTabLayout.setupWithViewPager(this.notificationViewPager);
         setupTabIcons();
+
         return rootView;
 
     }
+
+
     private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(3).setIcon(tabIcons[3]);
+        notificationTabLayout.getTabAt(0).setIcon(tabIcons[0]);
+        notificationTabLayout.getTabAt(1).setIcon(tabIcons[1]);
+        notificationTabLayout.getTabAt(2).setIcon(tabIcons[2]);
+        notificationTabLayout.getTabAt(3).setIcon(tabIcons[3]);
     }
+
     private void setupViewPager(ViewPager viewPager) {
-        this.adapter = new ViewPagerAdapter(getFragmentManager());
-        this.adapter.addFragment(new QuestionNotificationTab(), "Question");
-        this.adapter.addFragment(new AnswerNotificationTab(), "Answer");
-        this.adapter.addFragment(new LikesNotificationTab(), "Likes");
-        this.adapter.addFragment(new FollowNotificationTab(), "Follow");
-        viewPager.setAdapter(this.adapter);
-
+        this.notificationPagerAdapter = new ViewPagerAdapter(getFragmentManager());
+        this.notificationPagerAdapter.addFragment(new QuestionNotificationTab(), "Question");
+        this.notificationPagerAdapter.addFragment(new AnswerNotificationTab(), "Answer");
+        this.notificationPagerAdapter.addFragment(new LikesNotificationTab(), "Likes");
+        this.notificationPagerAdapter.addFragment(new FollowNotificationTab(), "Follow");
+        viewPager.setAdapter(this.notificationPagerAdapter);
 
     }
+
     public class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList();
         private final List<String> mFragmentTitleList = new ArrayList();

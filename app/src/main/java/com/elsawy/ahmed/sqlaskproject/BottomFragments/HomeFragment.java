@@ -2,6 +2,7 @@ package com.elsawy.ahmed.sqlaskproject.BottomFragments;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,15 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment{
 
     String TAG = "HomeFragment";
-    ViewPager viewPager;
-    ViewPagerAdapter adapter;
+    private ViewPager viewPager;
+    private ViewPagerAdapter adapter;
+    private TabLayout tabLayout;
 
+    private WallTab wallTab;
+    private DiscoverTab discoverTab;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -35,20 +39,25 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.i("HomeFragment","onCreateView");
 
         View rootView = inflater.inflate(R.layout.bottom_home, container, false);
 
         this.viewPager = (ViewPager) rootView.findViewById(R.id.viewpager_home);
-        setupViewPager(this.viewPager);
-        ((TabLayout) rootView.findViewById(R.id.home_tabs)).setupWithViewPager(this.viewPager);
+        tabLayout = (TabLayout) rootView.findViewById(R.id.home_tabs);
+
+        setupViewPager();
+        tabLayout.setupWithViewPager(this.viewPager);
 
         return rootView;
     }
 
-    private void setupViewPager(ViewPager viewPager) {
+    private void setupViewPager() {
         this.adapter = new ViewPagerAdapter(getFragmentManager());
-        this.adapter.addFragment(new WallTab(), "WALL");
-        this.adapter.addFragment(new DiscoverTab(), "DISCOVER");
+        wallTab = new WallTab();
+        discoverTab = new DiscoverTab();
+        this.adapter.addFragment(wallTab, "WALL");
+        this.adapter.addFragment(discoverTab, "DISCOVER");
         viewPager.setAdapter(this.adapter);
     }
 

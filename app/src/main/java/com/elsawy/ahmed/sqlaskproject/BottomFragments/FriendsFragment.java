@@ -44,8 +44,6 @@ public class FriendsFragment extends Fragment {
         peopleMayKnowRecyclerView.setItemAnimator(new DefaultItemAnimator());
         peopleMayKnowRecyclerView.setAdapter(peopleMayKnowAdapter);
 
-
-
         return rootView;
     }
 

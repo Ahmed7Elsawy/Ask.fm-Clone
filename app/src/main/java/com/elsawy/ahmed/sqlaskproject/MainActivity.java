@@ -32,10 +32,12 @@ public class MainActivity extends AppCompatActivity
     Toolbar toolbar;
     String TAG = "MainActivity";
 
-    HomeFragment homeFragment;
-    NotificationFragment notificationFragment;
-    FriendsFragment friendsFragment;
-    ProfileFragment profileFragment;
+    private HomeFragment homeFragment;
+    private NotificationFragment notificationFragment;
+    private FriendsFragment friendsFragment;
+    private ProfileFragment profileFragment;
+
+    private int currentBottomId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity
         friendsFragment = new FriendsFragment();
         profileFragment = new ProfileFragment();
         setFragment(homeFragment);
+//        setHomeFragment();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -70,25 +73,42 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void setFragment(Fragment fragment){
+    private void setFragment(Fragment newFragment){
+
+        for (Fragment oldFragment : getSupportFragmentManager().getFragments()) {
+            getSupportFragmentManager().beginTransaction().remove(oldFragment).commit();
+        }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.container,fragment);
+        fragmentTransaction.replace(R.id.container, newFragment);
         fragmentTransaction.commit();
     }
+    private void setHomeFragment(){
+        HomeFragment homeFragment2 = new HomeFragment();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.detach();
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+        }
+        fragmentTransaction.replace(R.id.container,homeFragment2);
+        fragmentTransaction.commit();
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Log.i("itemID",currentBottomId+"");
+            if (currentBottomId == item.getItemId() || (currentBottomId == -1 && item.getItemId() == R.id.navigation_home))
+                return false;
+            currentBottomId = item.getItemId();
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-//                    textView.setText("title_home");
                     showActionBar();
                     setFragment(homeFragment);
                     return true;
 
                 case R.id.navigation_notifications:
-//                    textView.setText("title_notifications");
                     showActionBar();
                     setFragment(notificationFragment);
                     return true;

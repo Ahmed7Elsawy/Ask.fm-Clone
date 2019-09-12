@@ -96,6 +96,7 @@ public class ProfileFragment extends Fragment {
         setupViewPager(this.viewPager);
         tabLayout.setupWithViewPager(this.viewPager);
         setupTabIcons();
+        tabLayout.getTabAt(0).select();
 
         return rootView;
 
