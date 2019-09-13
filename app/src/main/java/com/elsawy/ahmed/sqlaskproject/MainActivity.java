@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.navigation_view);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         homeFragment = new HomeFragment();
         notificationFragment = new NotificationFragment();
@@ -62,6 +61,7 @@ public class MainActivity extends AppCompatActivity
         setFragment(homeFragment);
         setSupportActionBar(toolbar);
 
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
 

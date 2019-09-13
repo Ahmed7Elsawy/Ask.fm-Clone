@@ -89,11 +89,13 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
         favorite_friend.setVisibility(View.VISIBLE);
         accepted_image.setVisibility(View.VISIBLE);
     }
+
     private void showAsUnFriendUser(){
         add_friend_image.setVisibility(View.VISIBLE);
         favorite_friend.setVisibility(View.GONE);
         accepted_image.setVisibility(View.GONE);
     }
+
     public void showAsUser(boolean isFriend){
         favorite_friend.setVisibility(View.GONE);
         if (isFriend) {
@@ -104,6 +106,7 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
             accepted_image.setVisibility(View.GONE);
         }
     }
+
     public void setFavoriteImage(Boolean isFavorite){
         if (isFavorite)
             favorite_friend.setImageResource(R.drawable.ic_stars_yellow_24dp);

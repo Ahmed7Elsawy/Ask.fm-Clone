@@ -68,7 +68,6 @@ public class AnswerNotificationViewHolder extends RecyclerView.ViewHolder {
 
     public void bindToFavoriteNotification(Answer currentAnswer, View.OnClickListener openProfileClickListener, View.OnClickListener openAnswerDetailClickListener) {
 
-//        String notificationTextHTML = "<span><span style=\"color:#EE1144;\">" + currentAnswer.getUsername() + "</span>&nbsp;posted&nbsp;a&nbsp;new&nbsp;answer!&nbsp;Check&nbsp;it&nbsp;out:&nbsp;<b>" + currentAnswer.getAnswerText() + "</b></span>";
         String notificationTextHTML = "<span><span style=\"color:#EE1144;\">" + currentAnswer.getUsername() + "</span> posted a new answer! Check it out: <b>" + currentAnswer.getAnswerText() + "</b></span>";
 
         answer_notification_TV.setText(Html.fromHtml(notificationTextHTML));

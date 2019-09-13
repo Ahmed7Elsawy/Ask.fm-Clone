@@ -47,7 +47,6 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindToAnswer(Answer answer, boolean isProfile, View.OnClickListener openProfileClickListener, View.OnClickListener likeClickListener,View.OnClickListener openAnswerDetailClickListener, SpannableString ss) {
-//        question_text_TV.setText(answer.getQuestion().getQuestionText());
         question_text_TV.setText(ss);
         question_text_TV.setMovementMethod(LinkMovementMethod.getInstance());
         answer_text_TV.setText(answer.getAnswerText());
@@ -57,7 +56,7 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
         handleLikesCount(answer.getLikesCount());
         handleLikeImage(answer.isLike());
 
-        if (isProfile) {
+        if (isProfile) { // hide profile image and username in profile activity
             user_profile_image.setVisibility(View.GONE);
             username_TV.setVisibility(View.GONE);
         }
