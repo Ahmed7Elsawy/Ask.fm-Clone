@@ -5,13 +5,104 @@
     android:layout_height="match_parent"
     tools:context=".ProfileTabs.BioProfileTab">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Bio Profile Tab"
-        android:textSize="40sp"
-        android:gravity="center"
-        />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="name : "
+                android:textSize="@dimen/bio_tab_text_size"
+                android:layout_margin="@dimen/bio_tab_margin"
+                />
+            <TextView
+                android:id="@+id/bio_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/bio_tab_text_size"
+                android:maxLines="1"
+                android:layout_margin="@dimen/bio_tab_margin"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="email : "
+                android:textSize="@dimen/bio_tab_text_size"
+                android:layout_margin="@dimen/bio_tab_margin"
+                />
+
+            <TextView
+                android:id="@+id/bio_email_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/bio_tab_text_size"
+                android:maxLines="1"
+                android:layout_margin="@dimen/bio_tab_margin"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="gender : "
+                android:textSize="@dimen/bio_tab_text_size"
+                android:layout_margin="@dimen/bio_tab_margin"
+                />
+
+            <TextView
+                android:id="@+id/bio_gender_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/bio_tab_text_size"
+                android:maxLines="1"
+                android:layout_margin="@dimen/bio_tab_margin"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="birthday : "
+                android:textSize="@dimen/bio_tab_text_size"
+                android:layout_margin="@dimen/bio_tab_margin"
+                />
+
+            <TextView
+                android:id="@+id/bio_birthday_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/bio_tab_text_size"
+                android:maxLines="1"
+                android:layout_margin="@dimen/bio_tab_margin"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
 
 </FrameLayout>
