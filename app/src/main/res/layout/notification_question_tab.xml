@@ -6,7 +6,7 @@
     tools:context=".NotificationTabs.QuestionNotificationTab">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_questions"
+        android:id="@+id/recycler_view_questions_notification"
         android:scrollbars="vertical"
         android:clipToPadding="false"
         android:layout_width="match_parent"

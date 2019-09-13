@@ -53,9 +53,9 @@ public class AnswerNotificationViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void bindToLikesNotification( Answer currentAnswer,String likeUsername, View.OnClickListener openProfileClickListener, View.OnClickListener openAnswerDetailClickListener) {
+    public void bindToLikesNotification(Answer currentAnswer, String likeUsername, View.OnClickListener openProfileClickListener, View.OnClickListener openAnswerDetailClickListener) {
 
-        String notificationTextHTML = "<span><span style=\"color:#EE1144;\">" + likeUsername + "</span> likes your answer: <b>" + currentAnswer.getAnswerText()+ "</b></span>";
+        String notificationTextHTML = "<span><span style=\"color:#EE1144;\">" + likeUsername + "</span> likes your answer: <b>" + currentAnswer.getAnswerText() + "</b></span>";
 
         answer_notification_TV.setText(Html.fromHtml(notificationTextHTML));
         answer_time_TV.setText(Utilties.getTimeAgo(currentAnswer.getTimestamp()));
@@ -78,6 +78,5 @@ public class AnswerNotificationViewHolder extends RecyclerView.ViewHolder {
         notificationSettingImage.setVisibility(View.GONE);
 
     }
-
 
 }

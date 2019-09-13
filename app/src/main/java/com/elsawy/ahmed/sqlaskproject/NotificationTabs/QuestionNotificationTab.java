@@ -14,10 +14,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.adapter.QuestionAdapter;
 
-
 public class QuestionNotificationTab extends Fragment {
 
-    RecyclerView recyclerView;
+    RecyclerView questionNotificationRecyclerView;
     QuestionAdapter mAdapter;
 
     public QuestionNotificationTab() {
@@ -27,13 +26,10 @@ public class QuestionNotificationTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView  = inflater.inflate(R.layout.notification_question_tab, container, false);
-        this.recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_questions);
-//        this.recyclerView.addItemDecoration(new VerticalSpaceItemDecoration(5));
-//        this.mAdapter = new QuestionAdapter(getActivity());
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        this.recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        this.recyclerView.setAdapter(this.mAdapter);
+        View rootView = inflater.inflate(R.layout.notification_question_tab, container, false);
+        this.questionNotificationRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_questions_notification);
+        this.questionNotificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.questionNotificationRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return rootView;
     }
@@ -41,8 +37,9 @@ public class QuestionNotificationTab extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        // we define adapter in onResume to listen to the deleted question after answer it
         this.mAdapter = new QuestionAdapter(getActivity());
-        this.recyclerView.setAdapter(this.mAdapter);
+        this.questionNotificationRecyclerView.setAdapter(this.mAdapter);
     }
 
 }

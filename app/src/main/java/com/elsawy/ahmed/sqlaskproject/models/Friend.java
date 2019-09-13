@@ -6,9 +6,7 @@ import android.os.Parcelable;
 
 public class Friend extends User implements Parcelable {
 
-//    private String friendID;
     private boolean favorite;
-//    private String friendName;
 
     public Friend() {
     }
@@ -34,7 +32,6 @@ public class Friend extends User implements Parcelable {
             return new Friend[size];
         }
     };
-
 
 
     public boolean getFavorite() {

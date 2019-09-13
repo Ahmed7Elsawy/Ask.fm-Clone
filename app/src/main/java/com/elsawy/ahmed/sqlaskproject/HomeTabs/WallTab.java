@@ -16,13 +16,12 @@ import com.elsawy.ahmed.sqlaskproject.adapter.AnswerAdapter;
 
 public class WallTab extends Fragment {
 
-    String TAG = "WallTab";
     private RecyclerView wallTabRecyclerView;
+    private final String tab = "WallTab";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.home_wall_tab, container, false);
 
         wallTabRecyclerView = rootView.findViewById(R.id.recycler_view_home_wall);
@@ -30,8 +29,8 @@ public class WallTab extends Fragment {
         wallTabRecyclerView.setItemAnimator(new DefaultItemAnimator());
         wallTabRecyclerView.setLayoutManager(new LinearLayoutManager(WallTab.this.getContext()));
 
-        AnswerAdapter answerAdapter = new AnswerAdapter(WallTab.this.getContext(),"WallTab");
-        wallTabRecyclerView.setAdapter(answerAdapter);
+        AnswerAdapter wallTabAnswerAdapter = new AnswerAdapter(WallTab.this.getContext(), tab);
+        wallTabRecyclerView.setAdapter(wallTabAnswerAdapter);
 
         return rootView;
     }

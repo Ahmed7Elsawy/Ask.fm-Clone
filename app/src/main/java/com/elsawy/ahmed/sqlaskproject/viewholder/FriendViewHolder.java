@@ -18,7 +18,7 @@ import com.elsawy.ahmed.sqlaskproject.models.User;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class FriendViewHolder extends RecyclerView.ViewHolder{
+public class FriendViewHolder extends RecyclerView.ViewHolder {
 
     private TextView friend_name;
     private ImageView favorite_friend;
@@ -79,35 +79,36 @@ public class FriendViewHolder extends RecyclerView.ViewHolder{
 
     }
 
-    private void showMyUser(){
+    private void showMyUser() {
         add_friend_image.setVisibility(View.GONE);
         favorite_friend.setVisibility(View.GONE);
         accepted_image.setVisibility(View.GONE);
     }
-    private void showAsFriendUser(){
+
+    private void showAsFriendUser() {
         add_friend_image.setVisibility(View.GONE);
         favorite_friend.setVisibility(View.VISIBLE);
         accepted_image.setVisibility(View.VISIBLE);
     }
 
-    private void showAsUnFriendUser(){
+    private void showAsUnFriendUser() {
         add_friend_image.setVisibility(View.VISIBLE);
         favorite_friend.setVisibility(View.GONE);
         accepted_image.setVisibility(View.GONE);
     }
 
-    public void showAsUser(boolean isFriend){
+    public void showAsUser(boolean isFriend) {
         favorite_friend.setVisibility(View.GONE);
         if (isFriend) {
             add_friend_image.setVisibility(View.GONE);
             accepted_image.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             add_friend_image.setVisibility(View.VISIBLE);
             accepted_image.setVisibility(View.GONE);
         }
     }
 
-    public void setFavoriteImage(Boolean isFavorite){
+    public void setFavoriteImage(Boolean isFavorite) {
         if (isFavorite)
             favorite_friend.setImageResource(R.drawable.ic_stars_yellow_24dp);
         else

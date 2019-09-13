@@ -25,11 +25,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
-    private DrawerLayout drawerLayout ;
-    private NavigationView navigationView ;
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private BottomNavigationView bottomNavigationView;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!SharedPrefManager.getInstance(this).isLoggedIn()) //check user is login or not
+        if (!SharedPrefManager.getInstance(this).isLoggedIn()) //check user is login or not
             openLoginActivity();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    private void setFragment(Fragment newFragment){ // open the new fragment
+    private void setFragment(Fragment newFragment) { // open the new fragment
 
         for (Fragment oldFragment : getSupportFragmentManager().getFragments()) {  // close all old fragment in the container before open new fragment
             getSupportFragmentManager().beginTransaction().remove(oldFragment).commit();
@@ -128,19 +128,19 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {  // handle navigation drawer buttons
 
-        switch(menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
 
             case R.id.nav_setting:
-                Toast.makeText(MainActivity.this,"Setting",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Setting", Toast.LENGTH_LONG).show();
                 break;
 
             case R.id.nav_about:
-                Toast.makeText(MainActivity.this,"About",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "About", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(MainActivity.this, AboutActivity.class));
                 break;
 
             case R.id.nav_logout:
-                Toast.makeText(MainActivity.this,"Log Out",Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Log Out", Toast.LENGTH_LONG).show();
                 SharedPrefManager.getInstance(this).logout();
                 openLoginActivity();
                 break;
@@ -151,17 +151,17 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    private void openLoginActivity(){
+    private void openLoginActivity() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
-    public void hideActionBar(){
+    public void hideActionBar() {
         getSupportActionBar().hide();
     }
 
-    public void showActionBar(){
+    public void showActionBar() {
         getSupportActionBar().show();
     }
 

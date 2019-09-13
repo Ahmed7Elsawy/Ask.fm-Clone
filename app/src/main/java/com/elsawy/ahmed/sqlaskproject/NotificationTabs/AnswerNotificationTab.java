@@ -19,6 +19,7 @@ public class AnswerNotificationTab extends Fragment {
 
     private RecyclerView answerNotificationRecyclerView;
     private AnswerNotificationAdapter answerNotificationAdapter;
+    private final String tab = "answersNotification";
 
     public AnswerNotificationTab() {
         // Required empty public constructor
@@ -34,17 +35,10 @@ public class AnswerNotificationTab extends Fragment {
         this.answerNotificationRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(5));
         this.answerNotificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.answerNotificationRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//        this.answerNotificationRecyclerView.setAdapter(this.mAdapter);
+        this.answerNotificationAdapter = new AnswerNotificationAdapter(getActivity(), tab);
+        this.answerNotificationRecyclerView.setAdapter(this.answerNotificationAdapter);
 
         return rootView;
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        this.answerNotificationAdapter = new AnswerNotificationAdapter(getActivity(), "answersNotification");
-        this.answerNotificationRecyclerView.setAdapter(this.answerNotificationAdapter);
-    }
-
 
 }

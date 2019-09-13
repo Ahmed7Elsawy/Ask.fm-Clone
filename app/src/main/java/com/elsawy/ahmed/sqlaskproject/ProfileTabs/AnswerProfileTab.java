@@ -20,7 +20,8 @@ import com.elsawy.ahmed.sqlaskproject.adapter.AnswerAdapter;
 public class AnswerProfileTab extends Fragment {
 
     private String profileID;
-    private RecyclerView mRecycler;
+    private RecyclerView answerProfileRecyclerView;
+    private final String tab = "ProfileTab";
 
     public AnswerProfileTab() {
         // Required empty public constructor
@@ -40,13 +41,13 @@ public class AnswerProfileTab extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.profile_answer_tab, container, false);
 
-        mRecycler = rootView.findViewById(R.id.recycler_view_profile_answers);
-        mRecycler.addItemDecoration(new VerticalSpaceItemDecoration(10));
-        mRecycler.setItemAnimator(new DefaultItemAnimator());
-        mRecycler.setLayoutManager(new LinearLayoutManager(AnswerProfileTab.this.getContext()));
+        answerProfileRecyclerView = rootView.findViewById(R.id.recycler_view_profile_answers);
+        answerProfileRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(10));
+        answerProfileRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        answerProfileRecyclerView.setLayoutManager(new LinearLayoutManager(AnswerProfileTab.this.getContext()));
 
-        AnswerAdapter adapter = new AnswerAdapter(AnswerProfileTab.this.getContext(), profileID, "ProfileTab");
-        mRecycler.setAdapter(adapter);
+        AnswerAdapter answerAdapter = new AnswerAdapter(AnswerProfileTab.this.getContext(), profileID, tab);
+        answerProfileRecyclerView.setAdapter(answerAdapter);
 
         return rootView;
 

@@ -41,7 +41,6 @@ import java.util.Map;
 
 public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
 
-    private String TAG = "AnswerAdapter";
     private Context mContext;
     private String profileId;
     private String tab;
@@ -49,7 +48,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
 
     private ArrayList<Answer> answersList = new ArrayList<>();
 
-    public AnswerAdapter(Context mContext, String tab) {
+    public AnswerAdapter(Context mContext, String tab) {  // for my profile
         this.mContext = mContext;
         this.profileId = SharedPrefManager.getInstance(mContext).getUserId();
         this.tab = tab;
@@ -57,7 +56,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         getAnswers();
     }
 
-    public AnswerAdapter(Context mContext, String profileId, String tab) {
+    public AnswerAdapter(Context mContext, String profileId, String tab) { // for other users profile
         this.mContext = mContext;
         this.profileId = profileId;
         this.tab = tab;
@@ -88,53 +87,25 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         View.OnClickListener likeClickListener = view -> {
             if (currentAnswer.isLike()) {
                 // remove like
-                handleLike(currentAnswer.getAnswerID(), "remove");
+                handleLike(currentAnswer.getAnswerID(), "remove"); // remove like from database
+                holder.handleLikeImage(false);// remove like from UI
                 currentAnswer.setLike(false);
-                holder.handleLikeImage(false);
                 currentAnswer.setLikesCount(currentAnswer.getLikesCount() - 1);
-                holder.handleLikesCount(currentAnswer.getLikesCount());
+                holder.handleLikesCount(currentAnswer.getLikesCount()); // update new like count UI
             } else {
                 // add like
-                handleLike(currentAnswer.getAnswerID(), "add");
-                holder.handleLikeImage(true);
+                handleLike(currentAnswer.getAnswerID(), "add"); // add like to database
+                holder.handleLikeImage(true); // add like to UI
                 currentAnswer.setLike(true);
                 currentAnswer.setLikesCount(currentAnswer.getLikesCount() + 1);
-                holder.handleLikesCount(currentAnswer.getLikesCount());
+                holder.handleLikesCount(currentAnswer.getLikesCount()); // update new like count UI
 
             }
         };
 
-        String questionAndUsername;
-        int questionLength;
-        int usernameLength;
-        if (currentAnswer.getQuestion().isAnonymous()) {
-            questionAndUsername = currentAnswer.getQuestion().getQuestionText() + "  " + currentAnswer.getQuestion().getAskerUsername();
-            questionLength = currentAnswer.getQuestion().getQuestionText().length() + 1;
-            usernameLength = currentAnswer.getQuestion().getAskerUsername().length() + 1;
-        } else {
-            questionAndUsername = currentAnswer.getQuestion().getQuestionText();
-            questionLength = currentAnswer.getQuestion().getQuestionText().length();
-            usernameLength = 0;
-        }
-        SpannableString spannableString = new SpannableString(questionAndUsername);
-        ClickableSpan askerUsernameClickableSpan = new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                openOtherProfileActivity(currentAnswer.getQuestion().getAskerID(), currentAnswer.getQuestion().getAskerUsername());
-            }
+        SpannableString spannableQuestion = getSpannableQuestion(currentAnswer); // to show or hide username of the question asker
 
-            @Override
-            public void updateDrawState(TextPaint usernameText) {
-                super.updateDrawState(usernameText);
-                usernameText.setColor(mContext.getResources().getColor(R.color.defaultTextColor));
-                usernameText.setTypeface(Typeface.create("Arial", Typeface.NORMAL));
-                usernameText.setUnderlineText(false);
-            }
-        };
-        spannableString.setSpan(askerUsernameClickableSpan, questionLength, questionLength + usernameLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-
-        holder.bindToAnswer(currentAnswer, isProfile, openProfileClickListener, likeClickListener,openAnswerDetailClickListener, spannableString);
+        holder.bindToAnswer(currentAnswer, isProfile, openProfileClickListener, likeClickListener, openAnswerDetailClickListener, spannableQuestion);
 
     }
 
@@ -143,10 +114,9 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         return answersList.size();
     }
 
-    private void getAnswers() {
+    private void getAnswers() { // get answers from database
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-//                Constants.URL_SELECT_ANSWER,
                 Constants.URL_HANDLE_ANSWER,
                 response -> {
                     try {
@@ -190,7 +160,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", profileId);
                 params.put("tab", tab);
@@ -203,7 +173,7 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
     }
 
-    private void handleLike(String answerId, String operation) {
+    private void handleLike(String answerId, String operation) { // change the like at database
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.URL_HANDLE_ANSWER,
@@ -243,6 +213,42 @@ public class AnswerAdapter extends RecyclerView.Adapter<AnswerViewHolder> {
         intent.putExtra("ProfileID", profileId);
         intent.putExtra("ProfileUsername", profileUsername);
         mContext.startActivity(intent);
+    }
+
+    private SpannableString getSpannableQuestion(Answer currentAnswer) {
+        String questionAndUsername;
+        int questionLength;
+        int usernameLength;
+
+        if (currentAnswer.getQuestion().isAnonymous()) { // hide username (so username length = 0)
+            questionAndUsername = currentAnswer.getQuestion().getQuestionText() + "  " + currentAnswer.getQuestion().getAskerUsername();
+            questionLength = currentAnswer.getQuestion().getQuestionText().length() + 1;
+            usernameLength = currentAnswer.getQuestion().getAskerUsername().length() + 1;
+        } else { // show username
+            questionAndUsername = currentAnswer.getQuestion().getQuestionText();
+            questionLength = currentAnswer.getQuestion().getQuestionText().length();
+            usernameLength = 0;
+        }
+
+        SpannableString spannableString = new SpannableString(questionAndUsername);
+
+        ClickableSpan askerUsernameClickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                openOtherProfileActivity(currentAnswer.getQuestion().getAskerID(), currentAnswer.getQuestion().getAskerUsername());
+            }
+
+            @Override
+            public void updateDrawState(TextPaint usernameText) {
+                super.updateDrawState(usernameText);
+                usernameText.setColor(mContext.getResources().getColor(R.color.defaultTextColor));
+                usernameText.setTypeface(Typeface.create("Arial", Typeface.NORMAL));
+                usernameText.setUnderlineText(false);
+            }
+        };
+        spannableString.setSpan(askerUsernameClickableSpan, questionLength, questionLength + usernameLength, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        return spannableString;
     }
 
 }

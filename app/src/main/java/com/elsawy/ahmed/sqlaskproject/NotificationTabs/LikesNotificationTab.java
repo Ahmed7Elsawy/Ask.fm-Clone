@@ -19,7 +19,7 @@ public class LikesNotificationTab extends Fragment {
 
     private RecyclerView likesNotificationRecyclerView;
     private AnswerNotificationAdapter likesNotificationAdapter;
-
+    private final String tab = "likesNotification";
 
     public LikesNotificationTab() {
         // Required empty public constructor
@@ -28,11 +28,10 @@ public class LikesNotificationTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.notification_likes_tab, container, false);
 
         this.likesNotificationRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_likes_notification);
-        this.likesNotificationAdapter = new AnswerNotificationAdapter(getActivity(), "likesNotification");
+        this.likesNotificationAdapter = new AnswerNotificationAdapter(getActivity(), tab);
 
         this.likesNotificationRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(5));
         this.likesNotificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

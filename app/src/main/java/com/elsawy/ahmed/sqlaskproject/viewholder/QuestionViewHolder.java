@@ -32,18 +32,18 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
     public QuestionViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        question_txt = (TextView)itemView.findViewById(R.id.question_txt);
-        question_time = (TextView)itemView.findViewById(R.id.question_time);
+        question_txt = (TextView) itemView.findViewById(R.id.question_txt);
+        question_time = (TextView) itemView.findViewById(R.id.question_time);
         question_setting = (ImageView) itemView.findViewById(R.id.question_setting);
-        profile_asker_image = (CircleImageView)itemView.findViewById(R.id.asker_profile_image);
-        question_cardView = (CardView)itemView.findViewById(R.id.question_card_view);
+        profile_asker_image = (CircleImageView) itemView.findViewById(R.id.asker_profile_image);
+        question_cardView = (CardView) itemView.findViewById(R.id.question_card_view);
     }
 
-    public void bindToQuestion(Context context,Question currentQuestion, View.OnClickListener cardViewClickListener, PopupMenu.OnMenuItemClickListener settingMenuItemClickListener){
+    public void bindToQuestion(Context context, Question currentQuestion, View.OnClickListener cardViewClickListener, PopupMenu.OnMenuItemClickListener settingMenuItemClickListener) {
 
         question_txt.setText(currentQuestion.getQuestionText());
         question_time.setText(Utilties.getTimeAgo(currentQuestion.getQuestionTimestamp()));
-        if(!currentQuestion.getAnonymous()){
+        if (!currentQuestion.getAnonymous()) {
             profile_asker_image.setImageDrawable(context.getResources().getDrawable(R.drawable.profile_image));
         }
 
@@ -59,4 +59,3 @@ public class QuestionViewHolder extends RecyclerView.ViewHolder {
     }
 
 }
-

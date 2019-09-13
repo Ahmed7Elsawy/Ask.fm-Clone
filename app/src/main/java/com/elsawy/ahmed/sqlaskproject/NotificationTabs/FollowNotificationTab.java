@@ -19,7 +19,7 @@ public class FollowNotificationTab extends Fragment {
 
     private RecyclerView favoriteNotificationRecyclerView;
     private AnswerNotificationAdapter favoriteNotificationAdapter;
-
+    private final String tab = "favoriteNotification";
 
     public FollowNotificationTab() {
         // Required empty public constructor
@@ -29,18 +29,18 @@ public class FollowNotificationTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.notification_follow_tab, container, false);
+
+        View rootView = inflater.inflate(R.layout.notification_follow_tab, container, false);
 
         this.favoriteNotificationRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_favorite_notification);
-        this.favoriteNotificationAdapter = new AnswerNotificationAdapter(getActivity(), "favoriteNotification");
+        this.favoriteNotificationAdapter = new AnswerNotificationAdapter(getActivity(), tab);
 
         this.favoriteNotificationRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(5));
         this.favoriteNotificationRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         this.favoriteNotificationRecyclerView.setItemAnimator(new DefaultItemAnimator());
         this.favoriteNotificationRecyclerView.setAdapter(this.favoriteNotificationAdapter);
-        return rootView;
 
+        return rootView;
     }
 
 }

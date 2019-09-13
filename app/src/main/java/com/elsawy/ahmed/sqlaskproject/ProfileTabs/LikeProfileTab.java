@@ -20,7 +20,8 @@ import com.elsawy.ahmed.sqlaskproject.adapter.AnswerAdapter;
 public class LikeProfileTab extends Fragment {
 
     private String profileID;
-    private RecyclerView mRecycler;
+    private RecyclerView likeProfileRecyclerView;
+    private final String tab = "LikeTab";
 
     public LikeProfileTab() {
         // Required empty public constructor
@@ -40,14 +41,13 @@ public class LikeProfileTab extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View rootView = inflater.inflate(R.layout.profile_like_tab, container, false);
 
+        likeProfileRecyclerView = rootView.findViewById(R.id.recycler_view_profile_like);
+        likeProfileRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(10));
+        likeProfileRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        likeProfileRecyclerView.setLayoutManager(new LinearLayoutManager(LikeProfileTab.this.getContext()));
 
-        mRecycler = rootView.findViewById(R.id.recycler_view_profile_like);
-        mRecycler.addItemDecoration(new VerticalSpaceItemDecoration(10));
-        mRecycler.setItemAnimator(new DefaultItemAnimator());
-        mRecycler.setLayoutManager(new LinearLayoutManager(LikeProfileTab.this.getContext()));
-
-        AnswerAdapter adapter = new AnswerAdapter(LikeProfileTab.this.getContext(), profileID, "LikeTab");
-        mRecycler.setAdapter(adapter);
+        AnswerAdapter answerAdapter = new AnswerAdapter(LikeProfileTab.this.getContext(), profileID, tab);
+        likeProfileRecyclerView.setAdapter(answerAdapter);
 
         return rootView;
     }

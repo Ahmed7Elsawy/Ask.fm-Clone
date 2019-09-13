@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class Answer implements Parcelable {
 
-//    public String uid;
     private String username;
     private String answerText;
     private String answerID;
@@ -16,7 +15,6 @@ public class Answer implements Parcelable {
     private int likesCount;
     private boolean isLike = false;
     private Question question;
-    public Map<String, Boolean> likes = new HashMap<>();
 
 
     public Answer() {
@@ -24,7 +22,7 @@ public class Answer implements Parcelable {
     }
 
     public Answer(Question question) {
-        this.question =question;
+        this.question = question;
     }
 
     protected Answer(Parcel in) {
@@ -65,7 +63,9 @@ public class Answer implements Parcelable {
         return answerID;
     }
 
-    public void setAnswerID(String answerID) { this.answerID = answerID; }
+    public void setAnswerID(String answerID) {
+        this.answerID = answerID;
+    }
 
     public Long getTimestamp() {
         return timestamp;
@@ -87,7 +87,9 @@ public class Answer implements Parcelable {
         return question;
     }
 
-    public void setQuestion(Question question) {this.question = question;}
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
 
     public String getUsername() {
         return username;
@@ -97,34 +99,12 @@ public class Answer implements Parcelable {
         this.username = username;
     }
 
-    public Map<String, Boolean> getLikes() {
-        return likes;
-    }
-
     public boolean isLike() {
         return isLike;
     }
 
     public void setLike(boolean like) {
         isLike = like;
-    }
-
-    public void setLikes(Map<String, Boolean> likes) {
-        this.likes = likes;
-    }
-
-    public Map<String, Object> toMap() {
-        HashMap<String, Object> result = new HashMap<>();
-//        result.put("uid", uid);
-//        result.put("author", author);
-        result.put("answerText", answerText);
-        result.put("answerID", answerID);
-        result.put("timestamp", timestamp);
-        result.put("likesCount", likesCount);
-        result.put("question", question);
-        result.put("likes", likes);
-
-        return result;
     }
 
     @Override

@@ -29,7 +29,7 @@ public class SharedPrefManager {
         return mInstance;
     }
 
-    public boolean userLogin(String id, String username, String email,String gender,String birthday){
+    public boolean userLogin(String id, String username, String email, String gender, String birthday) {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -45,41 +45,44 @@ public class SharedPrefManager {
         return true;
     }
 
-    public boolean isLoggedIn(){
+    public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-        if(sharedPreferences.getString(KEY_USERNAME, null) != null){
+        if (sharedPreferences.getString(KEY_USERNAME, null) != null) {
             return true;
         }
         return false;
     }
 
-    public boolean logout(){
+    public boolean logout() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        return true; 
+        return true;
     }
 
 
-    public String getUsername(){
+    public String getUsername() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USERNAME, null);
     }
-    public String getUserId(){
+
+    public String getUserId() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USER_ID, null);
     }
 
-    public String getUserEmail(){
+    public String getUserEmail() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USER_EMAIL, null);
     }
-    public String getUserGender(){
+
+    public String getUserGender() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USER_GENDER, null);
     }
-    public String getUserBirthday(){
+
+    public String getUserBirthday() {
         SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return sharedPreferences.getString(KEY_USER_BIRTHDAY, null);
     }
