@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.elsawy.ahmed.sqlaskproject.NotificationTabs.AnswerNotificationTab;
-import com.elsawy.ahmed.sqlaskproject.NotificationTabs.FollowNotificationTab;
+import com.elsawy.ahmed.sqlaskproject.NotificationTabs.FavoriteNotificationTab;
 import com.elsawy.ahmed.sqlaskproject.NotificationTabs.LikesNotificationTab;
 import com.elsawy.ahmed.sqlaskproject.NotificationTabs.QuestionNotificationTab;
 import com.elsawy.ahmed.sqlaskproject.R;
@@ -67,7 +67,7 @@ public class NotificationFragment extends Fragment {
         this.notificationPagerAdapter.addFragment(new QuestionNotificationTab(), "Question");
         this.notificationPagerAdapter.addFragment(new AnswerNotificationTab(), "Answer");
         this.notificationPagerAdapter.addFragment(new LikesNotificationTab(), "Likes");
-        this.notificationPagerAdapter.addFragment(new FollowNotificationTab(), "Follow");
+        this.notificationPagerAdapter.addFragment(new FavoriteNotificationTab(), "Follow");
         viewPager.setAdapter(this.notificationPagerAdapter);
 
     }

@@ -15,4 +15,9 @@ public class Constants {
     public static final String URL_HANDLE_LIKES_NOTIFICATION = ROOT_URL + "handleLikesNotification.php";
     public static final String URL_HANDLE_FAVORITE_NOTIFICATION = ROOT_URL + "handleFavoriteNotification.php";
 
+    public static final String ANSWERS_NOTIFICATION = "answersNotification";
+    public static final String LIKES_NOTIFICATION = "likesNotification";
+    public static final String FAVORITES_NOTIFICATION = "favoriteNotification";
+
+
 }

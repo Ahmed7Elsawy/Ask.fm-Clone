@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="@dimen/profile_header_height"
-    android:background="@drawable/profile_background1">
+    android:background="@color/profileHeaderBackground">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"

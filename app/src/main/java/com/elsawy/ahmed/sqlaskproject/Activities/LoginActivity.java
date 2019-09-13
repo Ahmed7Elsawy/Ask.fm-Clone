@@ -17,10 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.elsawy.ahmed.sqlaskproject.MainActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
@@ -36,8 +33,6 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
-
-    String TAG = "LoginActivity";
 
     private AutoCompleteTextView emailView;
     private EditText passwordView;
@@ -164,7 +159,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
         ){
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("email", email);
                 params.put("password", password);

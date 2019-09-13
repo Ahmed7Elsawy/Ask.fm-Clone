@@ -158,5 +158,7 @@
     <string name="log_out">Log Out</string>
     <string name="delete">delete</string>
     <string name="block">block</string>
+    <string name="cancel_image">cancel_image</string>
+    <string name="send_image">send_image</string>
 
 </resources>

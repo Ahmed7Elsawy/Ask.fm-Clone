@@ -2,12 +2,10 @@ package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
-import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.elsawy.ahmed.sqlaskproject.Activities.AnswerDetailActivity;

@@ -15,5 +15,6 @@
     <color name="defaultTextColor">#CDCDD9</color>
 
     <color name="yellow">#FFCC00</color>
+    <color name="profileHeaderBackground">#0F0F0F</color>
 
 </resources>

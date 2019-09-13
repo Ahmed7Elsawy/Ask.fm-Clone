@@ -12,16 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elsawy.ahmed.sqlaskproject.R;
+import com.elsawy.ahmed.sqlaskproject.Utils.Constants;
 import com.elsawy.ahmed.sqlaskproject.Utils.VerticalSpaceItemDecoration;
 import com.elsawy.ahmed.sqlaskproject.adapter.AnswerNotificationAdapter;
 
-public class FollowNotificationTab extends Fragment {
+public class FavoriteNotificationTab extends Fragment {
 
     private RecyclerView favoriteNotificationRecyclerView;
     private AnswerNotificationAdapter favoriteNotificationAdapter;
-    private final String tab = "favoriteNotification";
+    private final String tab = Constants.FAVORITES_NOTIFICATION;
 
-    public FollowNotificationTab() {
+    public FavoriteNotificationTab() {
         // Required empty public constructor
     }
 
@@ -30,7 +31,7 @@ public class FollowNotificationTab extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.notification_follow_tab, container, false);
+        View rootView = inflater.inflate(R.layout.notification_favorite_tab, container, false);
 
         this.favoriteNotificationRecyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_favorite_notification);
         this.favoriteNotificationAdapter = new AnswerNotificationAdapter(getActivity(), tab);

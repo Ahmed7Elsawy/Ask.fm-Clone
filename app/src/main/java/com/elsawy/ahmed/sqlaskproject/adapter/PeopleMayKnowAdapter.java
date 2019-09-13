@@ -2,7 +2,6 @@ package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
@@ -34,10 +32,8 @@ import java.util.Map;
 
 public class PeopleMayKnowAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
-    private String TAG = "PeopleMayKnowAdapter";
     private Context mContext;
     private String userId;
-
 
     private ArrayList<User> peopleMayKnowList = new ArrayList<>();
 
@@ -59,12 +55,12 @@ public class PeopleMayKnowAdapter extends RecyclerView.Adapter<FriendViewHolder>
 
         final User currentUser = PeopleMayKnowAdapter.this.peopleMayKnowList.get(position);
         View.OnClickListener addFriendClickListener = view -> {
-            addFriend(this.mContext,currentUser.getUserID());
+            addFriend(this.mContext, currentUser.getUserID());
             peopleMayKnowList.remove(position);
             notifyDataSetChanged();
         };
 
-        View.OnClickListener openUserProfile = view ->{
+        View.OnClickListener openUserProfile = view -> {
             Intent intent = new Intent(mContext, ProfileActivity.class);
             intent.putExtra("ProfileID", currentUser.getUserID());
             intent.putExtra("ProfileUsername", currentUser.getUsername());
@@ -88,7 +84,6 @@ public class PeopleMayKnowAdapter extends RecyclerView.Adapter<FriendViewHolder>
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        Log.i("OBJResponse", obj.toString());
 
                         if (!obj.getBoolean("error")) {
 
@@ -118,7 +113,7 @@ public class PeopleMayKnowAdapter extends RecyclerView.Adapter<FriendViewHolder>
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", userId);
                 params.put("key", "mayKnow");
@@ -137,7 +132,6 @@ public class PeopleMayKnowAdapter extends RecyclerView.Adapter<FriendViewHolder>
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        Log.i("ADDFRIEND",obj.toString());
                         if (obj.getBoolean("error")) {
                             Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show();
                         }
@@ -150,7 +144,7 @@ public class PeopleMayKnowAdapter extends RecyclerView.Adapter<FriendViewHolder>
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", String.valueOf(SharedPrefManager.getInstance(context).getUserId()));
                 params.put("friend_id", friend_id);

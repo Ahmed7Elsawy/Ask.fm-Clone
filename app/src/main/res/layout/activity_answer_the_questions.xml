@@ -24,6 +24,7 @@
             android:layout_marginStart="@dimen/ask_and_answer_activity_cancel_margin_start"
             android:layout_marginEnd="@dimen/ask_and_answer_activity_cancel_margin_end"
             android:scaleType="fitXY"
+            android:contentDescription="@string/cancel_image"
             />
 
         <TextView
@@ -47,6 +48,7 @@
             android:layout_gravity="center"
             android:clickable="false"
             android:background="@color/colorPrimary"
+            android:contentDescription="@string/send_image"
             />
 
     </LinearLayout>
@@ -64,6 +66,6 @@
         android:maxLength="300"
         android:background="@color/white"
         android:inputType="text"
-        />
+        android:importantForAutofill="no" />
 
 </LinearLayout>

@@ -2,8 +2,6 @@ package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +32,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotificationViewHolder>{
+public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotificationViewHolder> {
 
     private Context mContext;
     private String profileId;
@@ -47,11 +45,11 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
         this.profileId = SharedPrefManager.getInstance(mContext).getUserId();
         this.notificationTab = notificationTab;
 
-        if(notificationTab.equals("answersNotification"))
+        if (notificationTab.equals(Constants.ANSWERS_NOTIFICATION))
             getAnswersNotification();
-        else if (notificationTab.equals("likesNotification"))
+        else if (notificationTab.equals(Constants.LIKES_NOTIFICATION))
             getLikesNotification();
-        else if (notificationTab.equals("favoriteNotification"))
+        else if (notificationTab.equals(Constants.FAVORITES_NOTIFICATION))
             getFavoriteNotification();
 
     }
@@ -71,25 +69,26 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
             answerDetailIntent.putExtra("theAnswer", currentAnswer);
             mContext.startActivity(answerDetailIntent);
         };
-        View.OnClickListener openAnswerProfileClickListener = view -> { openProfileUser(currentAnswer.getQuestion().getReceiverID(),currentAnswer.getUsername()); };
+        View.OnClickListener openAnswerProfileClickListener = view -> {
+            openProfileUser(currentAnswer.getQuestion().getReceiverID(), currentAnswer.getUsername());
+        };
 
-        if (notificationTab.equals("answersNotification")) {
+        if (notificationTab.equals(Constants.ANSWERS_NOTIFICATION)) {
             PopupMenu.OnMenuItemClickListener settingMenuItemClickListener = menuItem -> {
-                switch (menuItem.getItemId()) {
-                    case R.id.delete_answer_menu:
-                        deleteAnswersNotification(currentAnswer.getAnswerID(), position);
-                        break;
+                if (menuItem.getItemId() == R.id.delete_answer_menu) {
+                    deleteAnswersNotification(currentAnswer.getAnswerID(), position);
                 }
                 return false;
             };
             holder.bindToAnswerNotification(mContext, currentAnswer, openAnswerProfileClickListener, openAnswerDetailClickListener, settingMenuItemClickListener);
-        }
-        else if(notificationTab.equals("likesNotification")){
+        } else if (notificationTab.equals(Constants.LIKES_NOTIFICATION)) {
             final User currentLikeUser = AnswerNotificationAdapter.this.likeUsersList.get(position);
-            View.OnClickListener openLikeProfileClickListener = view -> { openProfileUser(currentLikeUser.getUserID(),currentLikeUser.getUsername()); };
+            View.OnClickListener openLikeProfileClickListener = view -> {
+                openProfileUser(currentLikeUser.getUserID(), currentLikeUser.getUsername());
+            };
             holder.bindToLikesNotification(currentAnswer, currentLikeUser.getUsername(), openLikeProfileClickListener, openAnswerDetailClickListener);
 
-        }else if (notificationTab.equals("favoriteNotification")) {
+        } else if (notificationTab.equals(Constants.FAVORITES_NOTIFICATION)) {
             holder.bindToFavoriteNotification(currentAnswer, openAnswerProfileClickListener, openAnswerDetailClickListener);
         }
 
@@ -106,7 +105,6 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
                 Constants.URL_HANDLE_ANSWER_NOTIFICATION,
                 response -> {
                     try {
-                        Log.i("AnswerNotifiResponse", response);
                         JSONObject obj = new JSONObject(response);
 
                         if (!obj.getBoolean("error")) {
@@ -158,20 +156,17 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
         RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
     }
 
-    private void deleteAnswersNotification(String answerId,int position) {
+    private void deleteAnswersNotification(String answerId, int position) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.URL_HANDLE_ANSWER_NOTIFICATION,
                 response -> {
                     try {
-                        Log.i("AnswerNotResponse", response);
                         JSONObject obj = new JSONObject(response);
 
                         if (!obj.getBoolean("error")) {
 
-                            Log.i("beforeDelete",answersList.size()+"");
                             answersList.remove(position);
-                            Log.i("afterDelete",answersList.size()+"");
                             notifyDataSetChanged();
 
                         } else {
@@ -205,7 +200,6 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
                 Constants.URL_HANDLE_LIKES_NOTIFICATION,
                 response -> {
                     try {
-                        Log.i("likesNotification", response);
                         JSONObject obj = new JSONObject(response);
 
                         if (!obj.getBoolean("error")) {
@@ -267,7 +261,6 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
                 Constants.URL_HANDLE_FAVORITE_NOTIFICATION,
                 response -> {
                     try {
-                        Log.i("favoriteNotification", response);
                         JSONObject obj = new JSONObject(response);
 
                         if (!obj.getBoolean("error")) {
@@ -277,7 +270,6 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
                                 JSONObject JSON_Answer = jsonArray.getJSONObject(answer_num);
 
                                 Answer currentAnswer = new Answer();
-//                                User currentUser = new User();
 
                                 currentAnswer.setUsername(JSON_Answer.getString("receiverUsername"));
                                 currentAnswer.getQuestion().setAskerUsername(JSON_Answer.getString("askerUsername"));
@@ -292,11 +284,7 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
                                 currentAnswer.getQuestion().setReceiverID(JSON_Answer.getString("receiver_id"));
                                 currentAnswer.setLike(JSON_Answer.getBoolean("islike"));
 
-//                                currentUser.setUsername(JSON_Answer.getString("LikeUsername"));
-//                                currentUser.setUserID(JSON_Answer.getString("likeUserId"));
-
                                 answersList.add(currentAnswer);
-//                                likeUsersList.add(currentUser);
 
                             }
                             notifyDataSetChanged();
@@ -325,7 +313,7 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
         RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
     }
 
-    private void openProfileUser(String profileId, String username){
+    private void openProfileUser(String profileId, String username) {
         Intent intent = new Intent(mContext, ProfileActivity.class);
         intent.putExtra("ProfileID", profileId);
         intent.putExtra("ProfileUsername", username);
@@ -333,4 +321,3 @@ public class AnswerNotificationAdapter  extends RecyclerView.Adapter<AnswerNotif
     }
 
 }
-

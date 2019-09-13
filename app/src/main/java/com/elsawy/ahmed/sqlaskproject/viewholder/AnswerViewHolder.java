@@ -28,7 +28,6 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
     private TextView answer_likes_count_TV;
     private CircleImageView user_profile_image;
     private ImageButton like_btn;
-    private ImageView reAsk_btn;
     private ImageView answer_setting_image;
     private CardView itemAnswerCardView;
 
@@ -41,7 +40,6 @@ public class AnswerViewHolder extends RecyclerView.ViewHolder {
         answer_likes_count_TV = (TextView) itemView.findViewById(R.id.answer_like_count_TV);
         user_profile_image = (CircleImageView) itemView.findViewById(R.id.answer_profile_image);
         like_btn = (ImageButton) itemView.findViewById(R.id.answer_like_image);
-        reAsk_btn = (ImageView) itemView.findViewById(R.id.answer_re_ask);
         answer_setting_image = (ImageView) itemView.findViewById(R.id.answer_setting);
         itemAnswerCardView = (CardView) itemView.findViewById(R.id.item_answer_card_view);
     }

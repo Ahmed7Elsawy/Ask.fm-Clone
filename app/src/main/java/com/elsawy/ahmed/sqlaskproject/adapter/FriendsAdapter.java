@@ -2,7 +2,6 @@ package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.elsawy.ahmed.sqlaskproject.Activities.ProfileActivity;
@@ -33,15 +31,12 @@ import java.util.Map;
 
 public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
-    private String TAG = "FriendsAdapter";
     private Context mContext;
     private String userId;
-
 
     private ArrayList<Friend> friendsList = new ArrayList<>();
 
     public FriendsAdapter(Context mContext) {
-
         this.mContext = mContext;
         userId = SharedPrefManager.getInstance(mContext).getUserId();
         getFriends();
@@ -58,14 +53,13 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
         final Friend currentFriend = FriendsAdapter.this.friendsList.get(position);
 
-
         View.OnClickListener deleteFriendClickListener = view -> {
-            deleteFriend(this.mContext,currentFriend.getUserID());
+            deleteFriend(this.mContext, currentFriend.getUserID());
             friendsList.remove(position);
             notifyDataSetChanged();
         };
 
-        View.OnClickListener openUserProfile = view ->{
+        View.OnClickListener openUserProfile = view -> {
             Intent intent = new Intent(mContext, ProfileActivity.class);
             intent.putExtra("ProfileID", currentFriend.getUserID());
             intent.putExtra("ProfileUsername", currentFriend.getUsername());
@@ -74,17 +68,17 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
             mContext.startActivity(intent);
         };
 
-        View.OnClickListener favoriteClickListener = view ->{
+        View.OnClickListener favoriteClickListener = view -> {
             if (currentFriend.getFavorite()) {
                 currentFriend.setFavorite(false);
             } else {
                 currentFriend.setFavorite(true);
             }
-            updateFavorite(mContext,currentFriend.getUserID(),currentFriend.getFavorite());
+            updateFavorite(mContext, currentFriend.getUserID(), currentFriend.getFavorite());
             holder.setFavoriteImage(currentFriend.getFavorite());
         };
 
-        holder.bindToFriend(currentFriend, favoriteClickListener,deleteFriendClickListener,openUserProfile);
+        holder.bindToFriend(currentFriend, favoriteClickListener, deleteFriendClickListener, openUserProfile);
 
     }
 
@@ -100,7 +94,6 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        Log.i("OBJResponse", obj.toString());
 
                         if (!obj.getBoolean("error")) {
 
@@ -131,7 +124,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", userId);
 
@@ -162,7 +155,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", String.valueOf(SharedPrefManager.getInstance(context).getUserId()));
                 params.put("friend_id", friend_id);
@@ -177,7 +170,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
     }
 
-    private void updateFavorite(Context context,String friend_id, boolean favorite) {
+    private void updateFavorite(Context context, String friend_id, boolean favorite) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.URL_FRIENDS,
@@ -198,7 +191,7 @@ public class FriendsAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", String.valueOf(SharedPrefManager.getInstance(context).getUserId()));
                 params.put("friend_id", friend_id);

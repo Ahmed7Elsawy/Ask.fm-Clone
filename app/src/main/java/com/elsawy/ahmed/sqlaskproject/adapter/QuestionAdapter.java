@@ -2,9 +2,7 @@ package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -14,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.elsawy.ahmed.sqlaskproject.Activities.AnswerTheQuestionsActivity;
@@ -63,10 +60,9 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
             switch (item.getItemId()) {
                 case R.id.delete_question_menu:
                     deleteQuestion(currentQuestion.getQuestionId(), position);
-                    Log.i("callDeleteQuestion",questionsList.size()+"");
                     break;
                 case R.id.block_menu:
-                    //handle block_menu click
+                    // TODO handle block_menu click
                     break;
             }
             return false;
@@ -74,7 +70,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
 
         View.OnClickListener cardViewClickListener = view -> {
             Intent intent = new Intent(mContext, AnswerTheQuestionsActivity.class);
-            intent.putExtra("questionInfo",currentQuestion);
+            intent.putExtra("questionInfo", currentQuestion);
             mContext.startActivity(intent);
         };
 
@@ -121,11 +117,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
                     }
                 },
                 error -> {
-                    Toast.makeText(mContext,error.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG).show();
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("receiver_id", userId);
                 return params;
@@ -135,7 +131,7 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
         RequestHandler.getInstance(mContext).addToRequestQueue(stringRequest);
     }
 
-    private void deleteQuestion(String question_id,int position){
+    private void deleteQuestion(String question_id, int position) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.URL_QUESTION,
@@ -143,11 +139,8 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
                     try {
                         JSONObject obj = new JSONObject(response);
                         if (!obj.getBoolean("error")) {
-                            // delete the question from list
-
-                            Log.i("beforeDeleteQuestion",questionsList.size()+"");
+                            //  delete the question from list
                             questionsList.remove(position);
-                            Log.i("afterDeleteQuestion",questionsList.size()+"");
                             notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -155,11 +148,11 @@ public class QuestionAdapter extends RecyclerView.Adapter<QuestionViewHolder> {
                     }
                 },
                 error -> {
-                    Toast.makeText(mContext,error.getMessage(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, error.getMessage(), Toast.LENGTH_LONG).show();
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("question_id", question_id);
                 return params;

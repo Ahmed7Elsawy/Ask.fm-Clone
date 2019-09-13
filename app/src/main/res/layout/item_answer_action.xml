@@ -35,18 +35,6 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/answer_re_ask"
-            android:layout_width="@dimen/item_answer_action_item_height_width"
-            android:layout_height="@dimen/item_answer_action_item_height_width"
-            android:layout_marginEnd="@dimen/item_answer_action_item_margin"
-            android:src="@drawable/ic_send_black_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/answer_setting"
-            app:layout_constraintTop_toTopOf="parent"
-            android:scaleType="fitXY"
-            />
-
-        <ImageView
             android:id="@+id/answer_setting"
             android:layout_width="@dimen/item_answer_action_item_height_width"
             android:layout_height="@dimen/item_answer_action_item_height_width"

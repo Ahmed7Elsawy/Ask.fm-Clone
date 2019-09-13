@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -15,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.elsawy.ahmed.sqlaskproject.R;
@@ -85,10 +83,9 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
 
             currentQuestion.setQuestionText(questionText);
             currentQuestion.setAnonymous(hideUser);
-            currentQuestion.setQuestionTimestamp(System.currentTimeMillis()/1000);
+            currentQuestion.setQuestionTimestamp(System.currentTimeMillis() / 1000);
 
             sendQuestion(currentQuestion);
-            Log.i("AskedQuestion",currentQuestion.getAskerID() + "  "+currentQuestion.getReceiverID() + "  "+currentQuestion.getQuestionText() + "  " + currentQuestion.getAnonymous());
 
             finish();
         }
@@ -106,12 +103,10 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
                 int remainLetterCount = maxLetterCount - count;
                 letterCountTV.setText(Integer.toString(remainLetterCount));
 
-                if(count == 0)
-                {
+                if (count == 0) {
                     sendQuestionBtn.setClickable(false);
                     sendQuestionBtn.setImageResource(R.drawable.ic_send_black_24dp);
-                }
-                else {
+                } else {
                     sendQuestionBtn.setClickable(true);
                     sendQuestionBtn.setImageResource(R.drawable.ic_send_white_24dp);
 
@@ -140,18 +135,18 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-    private void sendQuestion(Question currentQuestion){
+    private void sendQuestion(Question currentQuestion) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.URL_INSERT_QUESTION,
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        if(!obj.getBoolean("error")){
+                        if (!obj.getBoolean("error")) {
 
 //                            openMainActivity();
 
-                        }else{
+                        } else {
                             Toast.makeText(
                                     getApplicationContext(),
                                     obj.getString("message"),
@@ -169,14 +164,14 @@ public class AskActivity extends AppCompatActivity implements View.OnClickListen
                             Toast.LENGTH_LONG
                     ).show();
                 }
-        ){
+        ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("asker_id", currentQuestion.getAskerID());
                 params.put("receiver_id", currentQuestion.getReceiverID());
                 params.put("question_text", currentQuestion.getQuestionText());
-                params.put("anonymous", currentQuestion.getAnonymous()+"");
+                params.put("anonymous", currentQuestion.getAnonymous() + "");
                 return params;
             }
 

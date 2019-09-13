@@ -2,7 +2,6 @@ package com.elsawy.ahmed.sqlaskproject.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -17,7 +16,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.elsawy.ahmed.sqlaskproject.ProfileTabs.AnswerProfileTab;
@@ -41,10 +39,9 @@ import java.util.Objects;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private String TAG = "ProfileActivity";
-    ViewPager viewPager;
-    ViewPagerAdapter adapter;
-    TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
+    private TabLayout tabLayout;
 
     private TextView usernameTV;
     private ImageView favoriteImage;
@@ -53,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity {
     private Button ask_btn;
     private LinearLayout friend_and_favorite_layout;
 
-    private String profileID,profileUsername;
+    private String profileID, profileUsername;
     private boolean friendFavorite;
 
     private int[] tabIcons = {
@@ -77,13 +74,11 @@ public class ProfileActivity extends AppCompatActivity {
         Intent intent = getIntent();
         this.profileID = intent.getStringExtra("ProfileID");
         this.profileUsername = intent.getStringExtra("ProfileUsername");
-        boolean isFriend = intent.getBooleanExtra("isFriend",false);
+        boolean isFriend = intent.getBooleanExtra("isFriend", false);
 
-        if(isFriend) {
-            String stringFavorite = intent.getStringExtra("friendFavorite");
-            Log.i("fav",stringFavorite+"");    friendFavorite = stringFavorite.equals("true");
+        if (isFriend) {
             putFriendProfileInfo(friendFavorite);
-        }else {
+        } else {
             putUnFriendProfileInfo();
             getProfileInfo(this.profileID);
         }
@@ -106,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
                         JSONObject obj = new JSONObject(response);
                         if (obj.getBoolean("error")) {
                             Toast.makeText(ProfileActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
-                        }else {
+                        } else {
                             putFriendProfileInfo(false);
                         }
                     } catch (JSONException e) {
@@ -138,12 +133,12 @@ public class ProfileActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Question question = new Question();
-            String userID =SharedPrefManager.getInstance(ProfileActivity.this).getUserId();
+            String userID = SharedPrefManager.getInstance(ProfileActivity.this).getUserId();
             question.setAskerID(userID);
             question.setReceiverID(profileID);
-            Intent intent=new Intent(ProfileActivity.this, AskActivity.class);
-            intent.putExtra("questionInfo",question);
-            intent.putExtra("username",profileUsername);
+            Intent intent = new Intent(ProfileActivity.this, AskActivity.class);
+            intent.putExtra("questionInfo", question);
+            intent.putExtra("username", profileUsername);
 
             ProfileActivity.this.startActivity(intent);
 
@@ -153,10 +148,10 @@ public class ProfileActivity extends AppCompatActivity {
     private class FavoriteBtnListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            if(friendFavorite){
+            if (friendFavorite) {
                 friendFavorite = false;
-            }else {
-                friendFavorite= true;
+            } else {
+                friendFavorite = true;
             }
 
             updateFavorite(profileID, friendFavorite);
@@ -164,7 +159,7 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void setFavoriteImage(Boolean isFavorite){
+    private void setFavoriteImage(Boolean isFavorite) {
         if (isFavorite)
             favoriteImage.setImageResource(R.drawable.ic_stars_yellow_24dp);
         else
@@ -190,10 +185,10 @@ public class ProfileActivity extends AppCompatActivity {
         usernameTV.setText(this.profileUsername);
     }
 
-    private void setupProfileHeader(){
-        usernameTV = (TextView)findViewById(R.id.username_profile);
+    private void setupProfileHeader() {
+        usernameTV = (TextView) findViewById(R.id.username_profile);
         favoriteImage = (ImageView) findViewById(R.id.favorite_image_profile);
-        userAcceptedImage = (ImageView)findViewById(R.id.user_accepted_profile);
+        userAcceptedImage = (ImageView) findViewById(R.id.user_accepted_profile);
         follow_btn = (Button) findViewById(R.id.profile_follow_btn);
         ask_btn = (Button) findViewById(R.id.profile_ask_btn);
         friend_and_favorite_layout = (LinearLayout) findViewById(R.id.profile_friend_and_favorite_layout);
@@ -209,7 +204,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         this.viewPager = (ViewPager) findViewById(R.id.viewpager_profile);
-        this.adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        this.viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         Bundle args = new Bundle();
         args.putString("profileID", this.profileID);
 
@@ -220,10 +215,10 @@ public class ProfileActivity extends AppCompatActivity {
         BioProfileTab bioProfileTab = new BioProfileTab();
         bioProfileTab.setArguments(args);
 
-        this.adapter.addFragment(answerProfileTab, "0");
-        this.adapter.addFragment(likeProfileTab, "0");
-        this.adapter.addFragment(bioProfileTab, "bio");
-        viewPager.setAdapter(this.adapter);
+        this.viewPagerAdapter.addFragment(answerProfileTab, "0");
+        this.viewPagerAdapter.addFragment(likeProfileTab, "0");
+        this.viewPagerAdapter.addFragment(bioProfileTab, "bio");
+        viewPager.setAdapter(this.viewPagerAdapter);
     }
 
     public class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -279,7 +274,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", String.valueOf(SharedPrefManager.getInstance(ProfileActivity.this).getUserId()));
                 params.put("friend_id", friend_id);
@@ -301,16 +296,13 @@ public class ProfileActivity extends AppCompatActivity {
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        Log.i("profileObj",obj.toString());
 
                         if (obj.getBoolean("error")) {
                             Toast.makeText(ProfileActivity.this, obj.getString("message"), Toast.LENGTH_LONG).show();
-                        }else {
-                            if(obj.getBoolean("isFriend")){
-                                Log.i("favorite",obj.toString());
+                        } else {
+                            if (obj.getBoolean("isFriend")) {
                                 putFriendProfileInfo(obj.getBoolean("favorite"));
-                            }else {
-                                Log.i("isFriend",obj.toString());
+                            } else {
                                 putUnFriendProfileInfo();
                             }
                         }

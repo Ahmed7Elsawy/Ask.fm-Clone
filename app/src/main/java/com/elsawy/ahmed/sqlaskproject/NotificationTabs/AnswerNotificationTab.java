@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.elsawy.ahmed.sqlaskproject.R;
+import com.elsawy.ahmed.sqlaskproject.Utils.Constants;
 import com.elsawy.ahmed.sqlaskproject.Utils.VerticalSpaceItemDecoration;
 import com.elsawy.ahmed.sqlaskproject.adapter.AnswerNotificationAdapter;
 
@@ -19,7 +20,7 @@ public class AnswerNotificationTab extends Fragment {
 
     private RecyclerView answerNotificationRecyclerView;
     private AnswerNotificationAdapter answerNotificationAdapter;
-    private final String tab = "answersNotification";
+    private final String tab = Constants.ANSWERS_NOTIFICATION;
 
     public AnswerNotificationTab() {
         // Required empty public constructor

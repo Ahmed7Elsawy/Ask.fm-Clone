@@ -1,7 +1,6 @@
 package com.elsawy.ahmed.sqlaskproject.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
 import com.elsawy.ahmed.sqlaskproject.R;
@@ -30,14 +28,13 @@ import java.util.Map;
 
 public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
 
-    private String TAG = "AnswerLikesAdapter";
     private Context mContext;
     private String userId;
 
 
     private ArrayList<Friend> answerLikesList = new ArrayList<>();
 
-    public AnswerLikesAdapter(Context mContext,String answerID) {
+    public AnswerLikesAdapter(Context mContext, String answerID) {
 
         this.mContext = mContext;
         userId = SharedPrefManager.getInstance(mContext).getUserId();
@@ -53,7 +50,7 @@ public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull FriendViewHolder holder, final int position) {
 
-        final Friend currentUser = (AnswerLikesAdapter.this.answerLikesList.get(position)) ;
+        final Friend currentUser = (AnswerLikesAdapter.this.answerLikesList.get(position));
 
         View.OnClickListener addFriendClickListener = view -> {
             addFriend(this.mContext, currentUser.getUserID());
@@ -62,12 +59,12 @@ public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
         };
 
         View.OnClickListener deleteFriendClickListener = view -> {
-            deleteFriend(this.mContext,currentUser.getUserID());
+            deleteFriend(this.mContext, currentUser.getUserID());
             currentUser.setFriend(false);
             holder.showAsUser(currentUser.isFriend());
         };
 
-        holder.bindToUser(this.mContext, currentUser, addFriendClickListener,deleteFriendClickListener);
+        holder.bindToUser(this.mContext, currentUser, addFriendClickListener, deleteFriendClickListener);
 
     }
 
@@ -83,7 +80,6 @@ public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        Log.i("AnswerLikes", obj.toString()+"  "+ answerID + userId);
 
                         if (!obj.getBoolean("error")) {
 
@@ -91,11 +87,12 @@ public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                             for (int user_number = 0; user_number < jsonArray.length(); user_number++) {
                                 JSONObject JSON_user = jsonArray.getJSONObject(user_number);
 
-                                Friend currentUser = new Friend();;
-                                if(JSON_user.getString("favorite").equals("null"))
+                                Friend currentUser = new Friend();
+
+                                if (JSON_user.getString("favorite").equals("null"))// true = not friend
                                 {
                                     currentUser.setFriend(false);
-                                }else {
+                                } else {
                                     currentUser.setFriend(true);
                                     currentUser.setFavorite(JSON_user.getBoolean("favorite"));
                                 }
@@ -137,7 +134,6 @@ public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        Log.i("ADDFRIEND",obj.toString());
                         if (obj.getBoolean("error")) {
                             Toast.makeText(context, obj.getString("message"), Toast.LENGTH_LONG).show();
                         }
@@ -150,7 +146,7 @@ public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", String.valueOf(SharedPrefManager.getInstance(context).getUserId()));
                 params.put("friend_id", friend_id);
@@ -185,7 +181,7 @@ public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
                 }
         ) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("user_id", String.valueOf(SharedPrefManager.getInstance(context).getUserId()));
                 params.put("friend_id", friend_id);
@@ -199,6 +195,5 @@ public class AnswerLikesAdapter extends RecyclerView.Adapter<FriendViewHolder> {
         RequestHandler.getInstance(context).addToRequestQueue(stringRequest);
 
     }
-
 
 }

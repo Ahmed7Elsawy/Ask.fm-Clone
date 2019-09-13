@@ -69,20 +69,20 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
         }
     }
 
-    private void sendAnswer(Answer currentAnswer){
+    private void sendAnswer(Answer currentAnswer) {
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 Constants.URL_HANDLE_ANSWER,
                 response -> {
                     try {
                         JSONObject obj = new JSONObject(response);
-                        Log.i("answerQuestion",response);
+                        Log.i("answerQuestion", response);
 
-                        if(!obj.getBoolean("error")){
+                        if (!obj.getBoolean("error")) {
 
 //                            openMainActivity();
 
-                        }else{
+                        } else {
                             Toast.makeText(
                                     getApplicationContext(),
                                     obj.getString("message"),
@@ -100,7 +100,7 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
                             Toast.LENGTH_LONG
                     ).show();
                 }
-        ){
+        ) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -128,15 +128,12 @@ public class AnswerTheQuestionsActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
 
-                if(count == 0)
-                {
+                if (count == 0) {
                     sendAnswerImage.setClickable(false);
                     sendAnswerImage.setImageResource(R.drawable.ic_send_black_24dp);
-                }
-                else {
+                } else {
                     sendAnswerImage.setClickable(true);
                     sendAnswerImage.setImageResource(R.drawable.ic_send_white_24dp);
-
                 }
 
             }

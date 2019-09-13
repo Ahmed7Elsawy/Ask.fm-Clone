@@ -54,14 +54,14 @@ public class AnswerDetailActivity extends AppCompatActivity {
 
     View.OnClickListener likeClickListener = view -> {
         if (currentAnswer.isLike()) {
-            // remove like
+            // remove the like
             handleLike(currentAnswer.getAnswerID(), "remove");
             currentAnswer.setLike(false);
             handleLikeImage(false);
             currentAnswer.setLikesCount(currentAnswer.getLikesCount() - 1);
             handleLikesCount(currentAnswer.getLikesCount());
         } else {
-            // add like
+            // add the like
             handleLike(currentAnswer.getAnswerID(), "add");
             handleLikeImage(true);
             currentAnswer.setLike(true);
@@ -85,7 +85,7 @@ public class AnswerDetailActivity extends AppCompatActivity {
 
     }
 
-    private void setupPostItems(){
+    private void setupPostItems() {
         question_text_TV = (TextView) findViewById(R.id.question_txt_answer);
         answer_text_TV = (TextView) findViewById(R.id.question_answer_TV);
         username_TV = (TextView) findViewById(R.id.answer_username_TV);
@@ -97,7 +97,7 @@ public class AnswerDetailActivity extends AppCompatActivity {
         answerDetailLikesRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_activity_detail_likes);
     }
 
-    private void bindToAnswer(){
+    private void bindToAnswer() {
         SpannableString spannableString = handleQuestionAndUsername();
         question_text_TV.setText(spannableString);
         question_text_TV.setMovementMethod(LinkMovementMethod.getInstance());
@@ -112,28 +112,28 @@ public class AnswerDetailActivity extends AppCompatActivity {
 
     }
 
-    private void bindToRecycleView(){
+    private void bindToRecycleView() {
         answerDetailLikesRecyclerView.addItemDecoration(new VerticalSpaceItemDecoration(1));
-        AnswerLikesAdapter answerLikesAdapter = new AnswerLikesAdapter(AnswerDetailActivity.this,currentAnswer.getAnswerID());
+        AnswerLikesAdapter answerLikesAdapter = new AnswerLikesAdapter(AnswerDetailActivity.this, currentAnswer.getAnswerID());
         answerDetailLikesRecyclerView.setLayoutManager(new LinearLayoutManager(AnswerDetailActivity.this));
         answerDetailLikesRecyclerView.setItemAnimator(new DefaultItemAnimator());
         answerDetailLikesRecyclerView.setAdapter(answerLikesAdapter);
     }
 
-    private void handleLikeImage(boolean isLike){
-        if (isLike){
+    private void handleLikeImage(boolean isLike) {
+        if (isLike) {
             like_btn.setImageResource(R.drawable.ic_favorite_orange_24dp);
-        }else {
+        } else {
             like_btn.setImageResource(R.drawable.ic_like_black_24dp);
         }
 
     }
 
-    private void handleLikesCount(int likesCount){
+    private void handleLikesCount(int likesCount) {
         answer_likes_count_TV.setText(String.valueOf(likesCount));
     }
 
-    private SpannableString handleQuestionAndUsername(){
+    private SpannableString handleQuestionAndUsername() {
         String questionAndUsername;
         int questionLength;
         int usernameLength;

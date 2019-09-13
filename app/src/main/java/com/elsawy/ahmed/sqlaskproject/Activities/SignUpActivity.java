@@ -7,7 +7,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,10 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
-import com.elsawy.ahmed.sqlaskproject.MainActivity;
 import com.elsawy.ahmed.sqlaskproject.R;
 import com.elsawy.ahmed.sqlaskproject.RequestHandler;
 import com.elsawy.ahmed.sqlaskproject.SharedPrefManager;
@@ -51,17 +48,14 @@ public class SignUpActivity extends AppCompatActivity {
     private String gender = null;
     private Date birthday = null;
     private int day, month, year;
-    private String TAG = "SignUpActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        if (SharedPrefManager.getInstance(this).isLoggedIn())
-        {
+        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
             openLoginActivity();
-            Log.d(TAG, "You are already have account");
         }
 
         emailField = findViewById(R.id.email_sign_up);
@@ -89,22 +83,22 @@ public class SignUpActivity extends AppCompatActivity {
         String date = SignUpActivity.this.birthdayTextView.getText().toString().trim();
         String username = firstName + " " + lastName;
 
-        if (!validateForm(email,password,firstName,lastName,gender,date)) {
+        if (!validateForm(email, password, firstName, lastName, gender, date)) {
             return;
         }
 
         showProgressDialog();
-        saveProfileData(email,password,username,gender,date);
+        saveProfileData(email, password, username, gender, date);
     }
 
-    private void saveProfileData(String email,String password,String username,String gender,String birthday) {
+    private void saveProfileData(String email, String password, String username, String gender, String birthday) {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST,
                 Constants.URL_REGISTER,
                 response -> {
-                        hideProgressDialog();
+                    hideProgressDialog();
                     try {
-                        Log.i("MainActivity Response",response);
+                        Log.i("MainActivity Response", response);
 
                         JSONObject jsonObject = new JSONObject(response);
 
@@ -120,7 +114,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_LONG).show();
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
                 params.put("username", username);
                 params.put("email", email);
@@ -149,7 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     }
 
-    private boolean validateForm(String email,String password,String firstName,String lastName,String gender,String birthday) {
+    private boolean validateForm(String email, String password, String firstName, String lastName, String gender, String birthday) {
         boolean valid = true;
 
         if (TextUtils.isEmpty(email)) {
@@ -207,7 +201,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private View.OnClickListener clickSignUpButton = v -> {
-            createAccount();
+        createAccount();
     };
 
     private View.OnClickListener clickGenderTextView = new View.OnClickListener() {
@@ -253,7 +247,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
     };
 
-    private void openLoginActivity(){
+    private void openLoginActivity() {
         Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
