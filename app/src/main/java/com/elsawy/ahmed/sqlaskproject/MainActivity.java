@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.elsawy.ahmed.sqlaskproject.Activities.AboutActivity;
@@ -22,15 +21,17 @@ import com.elsawy.ahmed.sqlaskproject.BottomFragments.FriendsFragment;
 import com.elsawy.ahmed.sqlaskproject.BottomFragments.HomeFragment;
 import com.elsawy.ahmed.sqlaskproject.BottomFragments.NotificationFragment;
 import com.elsawy.ahmed.sqlaskproject.BottomFragments.ProfileFragment;
-import com.elsawy.ahmed.sqlaskproject.Utils.Utilties;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    Toolbar toolbar;
-    String TAG = "MainActivity";
+    private Toolbar toolbar;
+    private DrawerLayout drawerLayout ;
+    private NavigationView navigationView ;
+    private BottomNavigationView bottomNavigationView;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
 
     private HomeFragment homeFragment;
     private NotificationFragment notificationFragment;
@@ -44,79 +45,69 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!SharedPrefManager.getInstance(this).isLoggedIn())
+        if(!SharedPrefManager.getInstance(this).isLoggedIn()) //check user is login or not
             openLoginActivity();
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         homeFragment = new HomeFragment();
         notificationFragment = new NotificationFragment();
         friendsFragment = new FriendsFragment();
         profileFragment = new ProfileFragment();
-        setFragment(homeFragment);
-//        setHomeFragment();
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setFragment(homeFragment);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }
 
-    private void setFragment(Fragment newFragment){
+    private void setFragment(Fragment newFragment){ // open the new fragment
 
-        for (Fragment oldFragment : getSupportFragmentManager().getFragments()) {
+        for (Fragment oldFragment : getSupportFragmentManager().getFragments()) {  // close all old fragment in the container before open new fragment
             getSupportFragmentManager().beginTransaction().remove(oldFragment).commit();
         }
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.container, newFragment);
         fragmentTransaction.commit();
     }
-    private void setHomeFragment(){
-        HomeFragment homeFragment2 = new HomeFragment();
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.detach();
-        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-        }
-        fragmentTransaction.replace(R.id.container,homeFragment2);
-        fragmentTransaction.commit();
-    }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Log.i("itemID",currentBottomId+"");
-            if (currentBottomId == item.getItemId() || (currentBottomId == -1 && item.getItemId() == R.id.navigation_home))
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {  // handle Bottom Navigation  buttons
+
+            if (currentBottomId == item.getItemId()
+                    || (currentBottomId == -1 && item.getItemId() == R.id.navigation_home)) // check this fragment is opened or not to not open it again
                 return false;
+
             currentBottomId = item.getItemId();
+
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case R.id.navigation_home:   // open home Bottom
                     showActionBar();
                     setFragment(homeFragment);
                     return true;
 
-                case R.id.navigation_notifications:
+                case R.id.navigation_notifications:  // open notifications Bottom
                     showActionBar();
                     setFragment(notificationFragment);
                     return true;
-                case R.id.navigation_friends:
+                case R.id.navigation_friends:   // open friends Bottom
                     showActionBar();
                     setFragment(friendsFragment);
                     return true;
-                case R.id.navigation_profile:
+                case R.id.navigation_profile:   // open profile Bottom
                     hideActionBar();
                     setFragment(profileFragment);
                     return true;
@@ -127,37 +118,36 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) { // close navigationDrawer if it is opened
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {  // handle navigation drawer buttons
 
-        if (id == R.id.nav_setting) {
-            Toast.makeText(MainActivity.this,"Setting",Toast.LENGTH_LONG).show();
-            Log.i(TAG,"Setting Clicked");
-        } else if (id == R.id.nav_about) {
-            Toast.makeText(MainActivity.this,"About",Toast.LENGTH_LONG).show();
-            Log.i(TAG,"About Clicked");
+        switch(menuItem.getItemId()){
 
-            startActivity(new Intent(MainActivity.this, AboutActivity.class));
+            case R.id.nav_setting:
+                Toast.makeText(MainActivity.this,"Setting",Toast.LENGTH_LONG).show();
+                break;
 
-        } else if (id == R.id.nav_logout) {
-            Toast.makeText(MainActivity.this,"Log Out",Toast.LENGTH_LONG).show();
-            Log.i(TAG,"Log Out Clicked");
-            SharedPrefManager.getInstance(this).logout();
-            openLoginActivity();
+            case R.id.nav_about:
+                Toast.makeText(MainActivity.this,"About",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                break;
+
+            case R.id.nav_logout:
+                Toast.makeText(MainActivity.this,"Log Out",Toast.LENGTH_LONG).show();
+                SharedPrefManager.getInstance(this).logout();
+                openLoginActivity();
+                break;
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawerLayout.closeDrawer(GravityCompat.START);  // close DrawerLayout after click buttons
         return true;
     }
 
