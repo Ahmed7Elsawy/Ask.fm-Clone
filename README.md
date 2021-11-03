@@ -6,4 +6,11 @@ It’s a clone of Ask.fm App, you can make an account, answer the questions, fol
 
 ## Demo
 
+
+
+https://user-images.githubusercontent.com/32717670/140190318-27256555-9bbc-4f88-9970-85825bb7e338.mp4
+
+
+
+
 https://youtu.be/zrgPSCFMTOA
